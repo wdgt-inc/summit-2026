@@ -31,7 +31,6 @@ export default function decorate(block) {
         // Preserve Universal Editor instrumentation on the link
         moveInstrumentation(row, link);
         link.classList.add('button');
-        if (idx > 0) link.classList.add('secondary');
         buttonContainer.append(link);
       }
     });
