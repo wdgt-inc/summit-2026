@@ -27,10 +27,9 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  background-color: var(--blue-primary);
   border-radius: 4px;
-  min-height: 300px;
   overflow: hidden;
+  aspect-ratio: 16 / 9;
 }
 
 .hero .hero-text {
@@ -42,8 +41,8 @@
 }
 
 @media (width >= 900px) {
-  .hero .hero-image {
-    min-height: 400px;
+  .hero > div:first-child {
+    order: 2;
   }
 }
 

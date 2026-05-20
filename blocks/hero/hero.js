@@ -1,36 +1,35 @@
 export default function decorate(block) {
   const rows = [...block.children];
-  if (rows.length < 4) return;
+  if (rows.length < 3) return;
 
-  const imageRow = rows[0];
-  const titleRow = rows[1];
-  const subtitleRow = rows[2];
-  const linksRow = rows[3];
+  const imageCell = rows[0].querySelector('div');
+  const titleCell = rows[1].querySelector('div');
+  const subtitleCell = rows[2].querySelector('div');
 
   const imageDiv = document.createElement('div');
-  imageDiv.className = 'hero-image';
-  imageDiv.append(...imageRow.querySelector('div').childNodes);
+  imageDiv.append(...imageCell.childNodes);
 
   const textDiv = document.createElement('div');
-  textDiv.className = 'hero-text';
 
   const h1 = document.createElement('h1');
-  h1.textContent = titleRow.querySelector('div').textContent.trim();
+  h1.textContent = titleCell.textContent.trim();
   textDiv.append(h1);
 
-  const p = document.createElement('p');
-  p.textContent = subtitleRow.querySelector('div').textContent.trim();
-  textDiv.append(p);
+  const subtitle = document.createElement('p');
+  subtitle.textContent = subtitleCell.textContent.trim();
+  textDiv.append(subtitle);
 
-  const linksContent = linksRow.querySelector('div');
-  if (linksContent) {
+  // Remaining rows are link items
+  if (rows.length > 3) {
     const buttonContainer = document.createElement('p');
     buttonContainer.className = 'button-container';
-    const links = linksContent.querySelectorAll('a');
-    links.forEach((link, i) => {
-      link.classList.add('button');
-      if (i > 0) link.classList.add('secondary');
-      buttonContainer.append(link);
+    rows.slice(3).forEach((row, idx) => {
+      const link = row.querySelector('a');
+      if (link) {
+        link.classList.add('button');
+        if (idx > 0) link.classList.add('secondary');
+        buttonContainer.append(link);
+      }
     });
     textDiv.append(buttonContainer);
   }
