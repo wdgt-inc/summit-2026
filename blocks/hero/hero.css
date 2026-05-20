@@ -22,36 +22,27 @@
   }
 }
 
-.hero > div {
+.hero .hero-image {
   flex: 1;
-}
-
-/* Image cell (first in DOM) - displayed on the right */
-.hero > div:first-child {
   display: flex;
   justify-content: center;
   align-items: stretch;
-  background-color: var(--blue-primary);
   border-radius: 4px;
-  min-height: 300px;
   overflow: hidden;
+  aspect-ratio: 16 / 9;
 }
 
-/* Text cell (last in DOM) - displayed on the left */
-.hero > div:last-child {
+.hero .hero-text {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  order: -1;
 }
 
 @media (width >= 900px) {
   .hero > div:first-child {
     order: 2;
-    min-height: 400px;
-  }
-
-  .hero > div:last-child {
-    order: 1;
   }
 }
 
