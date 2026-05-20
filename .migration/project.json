@@ -2,5 +2,9 @@
   "type": "xwalk",
   "contentHostUrl": "author-p10681-e1696505.adobeaemcloud.com",
   "previewOrg": "wdgt-inc",
-  "previewSite": "summit-2026"
+  "previewSite": "summit-2026",
+  "aemSitePath": "/content/summit-2026",
+  "aemAssetsFolderPath": "/content/dam/summit-2026",
+  "aemSiteName": "summit-2026",
+  "aemSiteTitle": "Summit 2026"
 }
