@@ -107,7 +107,8 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Card",
-                  "model": "card"
+                  "model": "card",
+                  "text": "<p><strong>New Card</strong></p><p>Description</p><p><a href=\"#\">Learn more</a></p>"
                 }
               }
             }
