@@ -33,6 +33,14 @@
             {
               "name": "Highlight",
               "value": "highlight"
+            },
+            {
+              "name": "Light",
+              "value": "light"
+            },
+            {
+              "name": "Blue",
+              "value": "blue"
             }
           ]
         }
@@ -50,7 +58,8 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "form"
       ]
     }
   ]

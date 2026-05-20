@@ -1,37 +1,98 @@
+.hero-container {
+  background-color: var(--light-color);
+}
+
 .hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 32px;
 }
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
-}
-
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
-}
-
-.hero img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 @media (width >= 900px) {
   .hero {
-    padding: 40px 32px;
+    flex-direction: row;
+    align-items: center;
   }
+}
+
+.hero > div {
+  flex: 1;
+}
+
+/* Image cell (first in DOM) - displayed on the right */
+.hero > div:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background-color: var(--blue-primary);
+  border-radius: 4px;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+/* Text cell (last in DOM) - displayed on the left */
+.hero > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (width >= 900px) {
+  .hero > div:first-child {
+    order: 2;
+    min-height: 400px;
+  }
+
+  .hero > div:last-child {
+    order: 1;
+  }
+}
+
+.hero h1 {
+  color: var(--text-color);
+  font-size: var(--heading-font-size-xxl);
+  font-weight: 300;
+  line-height: 1.2;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hero p {
+  color: var(--text-color);
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.hero .button-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.hero a.button:any-link {
+  margin: 0;
+}
+
+.hero picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 0;
+}
+
+.hero img {
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }

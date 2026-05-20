@@ -4,6 +4,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: 2;
   position: fixed;
+  border-bottom: 1px solid var(--border-color);
 }
 
 header nav {
@@ -17,7 +18,7 @@ header nav {
   margin: auto;
   max-width: 1248px;
   height: var(--nav-height);
-  padding: 0 24px;
+  padding: 0 16px;
   font-family: var(--body-font-family);
 }
 
@@ -37,10 +38,10 @@ header nav[aria-expanded='true'] {
 
   header nav {
     display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
+    justify-content: flex-start;
+    gap: 0;
+    max-width: unset;
+    padding: 0 16px;
   }
 
   header nav[aria-expanded='true'] {
@@ -56,6 +57,7 @@ header nav p {
 
 header nav a:any-link {
   color: currentcolor;
+  text-decoration: none;
 }
 
 /* hamburger */
@@ -142,10 +144,17 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
 /* brand */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
-  font-weight: 700;
-  line-height: 1;
+  flex-basis: auto;
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: 0.1px;
+}
+
+header nav .nav-brand a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 header nav .nav-brand img {
@@ -170,11 +179,11 @@ header nav[aria-expanded='true'] .nav-sections {
 header nav .nav-sections ul {
   list-style: none;
   padding-left: 0;
-  font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-xs);
 }
 
 header nav .nav-sections ul > li {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 header nav .nav-sections ul > li > ul {
@@ -190,6 +199,9 @@ header nav .nav-sections ul > li > ul > li {
     display: block;
     visibility: visible;
     white-space: nowrap;
+    margin-left: 16px;
+    border-left: 1px solid var(--border-color);
+    padding-left: 16px;
   }
 
   header nav[aria-expanded='true'] .nav-sections {
@@ -224,8 +236,20 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections ul {
     display: flex;
-    gap: 24px;
+    gap: 0;
     margin: 0;
+  }
+
+  header nav .nav-sections ul > li {
+    padding: 0 16px;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    color: var(--dark-color);
+  }
+
+  header nav .nav-sections ul > li:hover {
+    background-color: var(--light-color);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
@@ -269,4 +293,5 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+  margin-left: auto;
 }
