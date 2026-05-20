@@ -1,0 +1,71 @@
+.form {
+  background-color: var(--background-color);
+  border-radius: 4px;
+  padding: 32px;
+  max-width: 700px;
+  margin: 24px auto 0;
+}
+
+.form h3 {
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.29;
+  color: var(--text-color);
+  margin: 0 0 24px;
+}
+
+.form .form-field {
+  margin-bottom: 16px;
+}
+
+.form .form-field label {
+  display: block;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.32px;
+  color: var(--dark-color);
+  margin-bottom: 4px;
+}
+
+.form .form-field .form-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 16px;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.29;
+  letter-spacing: 0.16px;
+  color: var(--text-color);
+  background-color: var(--light-color);
+  border: none;
+  border-bottom: 1px solid #8d8d8d;
+  outline: none;
+  font-family: var(--body-font-family);
+}
+
+.form .form-field .form-input::placeholder {
+  color: rgb(22 22 22 / 40%);
+}
+
+.form .form-field .form-input:focus {
+  border-bottom: 2px solid var(--blue-primary);
+}
+
+.form .button-container {
+  margin-top: 24px;
+}
+
+.form .button-container a.button:any-link {
+  background-color: var(--blue-primary);
+  margin: 0;
+}
+
+.form p:last-child {
+  font-size: var(--body-font-size-s);
+  color: var(--dark-color);
+  text-align: center;
+  margin-top: 16px;
+}
+
+.section.blue .form p:last-child {
+  color: var(--dark-color);
+}

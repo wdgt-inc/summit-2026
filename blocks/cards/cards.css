@@ -8,7 +8,7 @@
 }
 
 .cards > ul > li {
-  border: 1px solid #dadada;
+  border: 1px solid var(--border-color);
   background-color: var(--background-color);
 }
 
@@ -24,4 +24,96 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+/* Cards Pricing Variant */
+.cards.pricing > ul {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.cards.pricing > ul > li {
+  border: none;
+  background-color: var(--light-color);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cards.pricing .cards-card-body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cards.pricing .cards-card-body > p:first-child strong {
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.29;
+  color: var(--text-color);
+}
+
+.cards.pricing .cards-card-body > p:nth-child(2) {
+  font-size: var(--body-font-size-xs);
+  line-height: 1.29;
+  letter-spacing: 0.16px;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.cards.pricing .cards-card-body > p:nth-child(3) {
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+  color: var(--dark-color);
+  margin: 0;
+}
+
+.cards.pricing .cards-card-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cards.pricing .cards-card-body ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.29;
+  letter-spacing: 0.16px;
+  color: var(--text-color);
+}
+
+.cards.pricing .cards-card-body ul li::before {
+  content: '';
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%230f62fe' d='M8.5 14.5l-4-4 1.41-1.41L8.5 11.67l5.59-5.58L15.5 7.5l-7 7z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.cards.pricing .cards-card-body .button-container {
+  margin-top: auto;
+}
+
+.cards.pricing .cards-card-body .button-container a.button:any-link {
+  background-color: var(--gray-80);
+  width: 100%;
+  margin: 8px 0 0;
+}
+
+.cards.pricing .cards-card-body .button-container a.button:hover {
+  background-color: #4c4c4c;
+}
+
+.cards.pricing .cards-card-image {
+  display: none;
 }
