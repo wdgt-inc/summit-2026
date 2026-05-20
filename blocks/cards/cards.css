@@ -46,6 +46,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex: 1;
 }
 
 .cards.pricing .cards-card-body > p:first-child strong {
@@ -100,8 +101,9 @@
   background-repeat: no-repeat;
 }
 
-.cards.pricing .cards-card-body .button-container {
+.cards.pricing .cards-card-body .button-container:last-child {
   margin-top: auto;
+  padding-top: 12px;
 }
 
 .cards.pricing .cards-card-body .button-container a.button:any-link {
@@ -115,5 +117,9 @@
 }
 
 .cards.pricing .cards-card-image {
+  display: none;
+}
+
+.cards.pricing > ul > li > .cards-card-body:empty {
   display: none;
 }
