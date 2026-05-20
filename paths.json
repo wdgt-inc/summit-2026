@@ -1,8 +1,8 @@
 {
   "mappings": [
-    "/content/aem-boilerplate/:/"
+    "/content/summit-2026/:/"
   ],
   "includes": [
-    "/content/aem-boilerplate/"
+    "/content/summit-2026/"
   ]
 }
