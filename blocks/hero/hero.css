@@ -31,10 +31,9 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  background-color: var(--blue-primary);
   border-radius: 4px;
-  min-height: 300px;
   overflow: hidden;
+  aspect-ratio: 16 / 9;
 }
 
 /* Text cell (last in DOM) - displayed on the left */
@@ -47,7 +46,6 @@
 @media (width >= 900px) {
   .hero > div:first-child {
     order: 2;
-    min-height: 400px;
   }
 
   .hero > div:last-child {

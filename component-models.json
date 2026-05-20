@@ -243,11 +243,46 @@
         "value": ""
       },
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string"
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Subtitle"
+      }
+    ]
+  },
+  {
+    "id": "hero-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Text"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Type",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
       }
     ]
   }

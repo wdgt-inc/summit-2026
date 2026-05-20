@@ -9,7 +9,23 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Hero",
-              "model": "hero"
+              "model": "hero",
+              "filter": "hero"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Hero Link",
+      "id": "hero-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Hero Link",
+              "model": "hero-link"
             }
           }
         }
@@ -35,14 +51,56 @@
           "value": ""
         },
         {
-          "component": "richtext",
-          "name": "text",
-          "value": "",
-          "label": "Text",
-          "valueType": "string"
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "subtitle",
+          "label": "Subtitle"
+        }
+      ]
+    },
+    {
+      "id": "hero-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link"
+        },
+        {
+          "component": "text",
+          "name": "linkText",
+          "label": "Text"
+        },
+        {
+          "component": "select",
+          "name": "linkType",
+          "label": "Type",
+          "options": [
+            {
+              "name": "Primary",
+              "value": "primary"
+            },
+            {
+              "name": "Secondary",
+              "value": "secondary"
+            }
+          ]
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "hero",
+      "components": [
+        "hero-link"
+      ]
+    }
+  ]
 }
