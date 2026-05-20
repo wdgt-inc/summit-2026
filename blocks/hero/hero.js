@@ -15,12 +15,16 @@ export default function decorate(block) {
 
   const h1 = document.createElement('h1');
   h1.textContent = titleCell.textContent.trim();
-  moveInstrumentation(titleCell, h1);
+  h1.setAttribute('data-aue-prop', 'title');
+  h1.setAttribute('data-aue-type', 'text');
+  moveInstrumentation(rows[1], h1);
   textDiv.append(h1);
 
   const subtitle = document.createElement('p');
   subtitle.textContent = subtitleCell.textContent.trim();
-  moveInstrumentation(subtitleCell, subtitle);
+  subtitle.setAttribute('data-aue-prop', 'subtitle');
+  subtitle.setAttribute('data-aue-type', 'text');
+  moveInstrumentation(rows[2], subtitle);
   textDiv.append(subtitle);
 
   // Remaining rows are link items

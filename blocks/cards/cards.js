@@ -26,6 +26,8 @@ export default function decorate(block) {
       if (headingText) {
         const heading = document.createElement('p');
         heading.innerHTML = `<strong>${headingText}</strong>`;
+        heading.setAttribute('data-aue-prop', 'heading');
+        heading.setAttribute('data-aue-type', 'text');
         moveInstrumentation(headingCell, heading);
         body.append(heading);
       }
