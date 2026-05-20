@@ -26,6 +26,7 @@ export default function decorate(block) {
       if (headingText) {
         const heading = document.createElement('p');
         heading.innerHTML = `<strong>${headingText}</strong>`;
+        moveInstrumentation(headingCell, heading);
         body.append(heading);
       }
     }

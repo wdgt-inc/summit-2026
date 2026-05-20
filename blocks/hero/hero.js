@@ -15,17 +15,19 @@ export default function decorate(block) {
 
   const h1 = document.createElement('h1');
   h1.textContent = titleCell.textContent.trim();
+  moveInstrumentation(titleCell, h1);
   textDiv.append(h1);
 
   const subtitle = document.createElement('p');
   subtitle.textContent = subtitleCell.textContent.trim();
+  moveInstrumentation(subtitleCell, subtitle);
   textDiv.append(subtitle);
 
   // Remaining rows are link items
   if (rows.length > 3) {
     const buttonContainer = document.createElement('p');
     buttonContainer.className = 'button-container';
-    rows.slice(3).forEach((row, idx) => {
+    rows.slice(3).forEach((row) => {
       const link = row.querySelector('a');
       if (link) {
         // Preserve Universal Editor instrumentation on the link
