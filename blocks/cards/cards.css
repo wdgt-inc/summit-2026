@@ -35,8 +35,7 @@
 }
 
 .cards.pricing > ul > li {
-  flex: 0 1 calc(33.333% - 22px);
-  min-width: 300px;
+  flex: 1 1 300px;
   border: 1px solid #c1c1c1;
   border-radius: 4px;
   background-color: var(--light-color);
