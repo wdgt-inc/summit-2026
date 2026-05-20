@@ -22,12 +22,8 @@
   }
 }
 
-.hero > div {
+.hero .hero-image {
   flex: 1;
-}
-
-/* Image cell (first in DOM) - displayed on the right */
-.hero > div:first-child {
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -37,22 +33,21 @@
   overflow: hidden;
 }
 
-/* Text cell (last in DOM) - displayed on the left */
-.hero > div:last-child {
+.hero .hero-text {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 @media (width >= 900px) {
-  .hero > div:first-child {
-    order: 2;
+  .hero .hero-image {
     min-height: 400px;
   }
+}
 
-  .hero > div:last-child {
-    order: 1;
-  }
+.hero .hero-text {
+  order: -1;
 }
 
 .hero h1 {
