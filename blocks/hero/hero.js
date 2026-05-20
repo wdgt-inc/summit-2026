@@ -1,3 +1,5 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   const rows = [...block.children];
   if (rows.length < 3) return;
@@ -26,6 +28,8 @@ export default function decorate(block) {
     rows.slice(3).forEach((row, idx) => {
       const link = row.querySelector('a');
       if (link) {
+        // Preserve Universal Editor instrumentation on the link
+        moveInstrumentation(row, link);
         link.classList.add('button');
         if (idx > 0) link.classList.add('secondary');
         buttonContainer.append(link);
@@ -34,6 +38,5 @@ export default function decorate(block) {
     textDiv.append(buttonContainer);
   }
 
-  block.textContent = '';
-  block.append(imageDiv, textDiv);
+  block.replaceChildren(imageDiv, textDiv);
 }
