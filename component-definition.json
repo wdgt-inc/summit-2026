@@ -112,8 +112,7 @@
                   "text": "<p>Description text goes here</p>",
                   "link": "#",
                   "linkText": "Learn more",
-                  "linkTitle": "Learn more",
-                  "linkType": ""
+                  "linkTitle": "Learn more"
                 }
               }
             }

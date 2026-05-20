@@ -30,8 +30,7 @@
               "text": "<p>Description text goes here</p>",
               "link": "#",
               "linkText": "Learn more",
-              "linkTitle": "Learn more",
-              "linkType": ""
+              "linkTitle": "Learn more"
             }
           }
         }
@@ -92,25 +91,6 @@
           "component": "text",
           "name": "linkTitle",
           "label": "Button Title"
-        },
-        {
-          "component": "select",
-          "name": "linkType",
-          "label": "Button Type",
-          "options": [
-            {
-              "name": "default",
-              "value": ""
-            },
-            {
-              "name": "primary",
-              "value": "primary"
-            },
-            {
-              "name": "secondary",
-              "value": "secondary"
-            }
-          ]
         }
       ]
     }
