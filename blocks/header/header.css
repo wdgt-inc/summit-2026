@@ -188,6 +188,7 @@ header nav .nav-sections ul > li {
 
 header nav .nav-sections ul > li > ul {
   margin-top: 0;
+  padding-left: 16px;
 }
 
 header nav .nav-sections ul > li > ul > li {
