@@ -1,3 +1,5 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   const rows = [...block.children];
   if (rows.length < 3) return;
@@ -13,27 +15,33 @@ export default function decorate(block) {
 
   const h1 = document.createElement('h1');
   h1.textContent = titleCell.textContent.trim();
+  h1.setAttribute('data-aue-prop', 'title');
+  h1.setAttribute('data-aue-type', 'text');
+  moveInstrumentation(rows[1], h1);
   textDiv.append(h1);
 
   const subtitle = document.createElement('p');
   subtitle.textContent = subtitleCell.textContent.trim();
+  subtitle.setAttribute('data-aue-prop', 'subtitle');
+  subtitle.setAttribute('data-aue-type', 'text');
+  moveInstrumentation(rows[2], subtitle);
   textDiv.append(subtitle);
 
   // Remaining rows are link items
   if (rows.length > 3) {
     const buttonContainer = document.createElement('p');
     buttonContainer.className = 'button-container';
-    rows.slice(3).forEach((row, idx) => {
+    rows.slice(3).forEach((row) => {
       const link = row.querySelector('a');
       if (link) {
+        // Preserve Universal Editor instrumentation on the link
+        moveInstrumentation(row, link);
         link.classList.add('button');
-        if (idx > 0) link.classList.add('secondary');
         buttonContainer.append(link);
       }
     });
     textDiv.append(buttonContainer);
   }
 
-  block.textContent = '';
-  block.append(imageDiv, textDiv);
+  block.replaceChildren(imageDiv, textDiv);
 }

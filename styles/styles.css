@@ -235,21 +235,14 @@ button:disabled:hover {
 
 /* sections */
 main > .section {
-  margin: 40px 0;
+  margin: 0;
+  padding: 40px 0;
 }
 
 main > .section > div {
   max-width: 1200px;
   margin: auto;
   padding: 0 24px;
-}
-
-main > .section:first-of-type {
-  margin-top: 0;
-}
-
-main > .section:last-of-type {
-  margin-bottom: 0;
 }
 
 @media (width >= 900px) {
@@ -269,6 +262,7 @@ main .section.highlight {
 main .section.light > .default-content-wrapper,
 main .section.highlight > .default-content-wrapper {
   text-align: center;
+  margin-bottom: 32px;
 }
 
 main .section.blue {

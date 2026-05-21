@@ -25,7 +25,12 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "name": "Card",
-              "model": "card"
+              "model": "card",
+              "heading": "New Card",
+              "text": "<p>Description text goes here</p>",
+              "link": "#",
+              "linkText": "Learn more",
+              "linkTitle": "Learn more"
             }
           }
         }
@@ -60,11 +65,32 @@
           "multi": false
         },
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "heading",
+          "label": "Heading"
+        },
+        {
           "component": "richtext",
           "name": "text",
           "value": "",
           "label": "Text",
           "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Button Link"
+        },
+        {
+          "component": "text",
+          "name": "linkText",
+          "label": "Button Text"
+        },
+        {
+          "component": "text",
+          "name": "linkTitle",
+          "label": "Button Title"
         }
       ]
     }
