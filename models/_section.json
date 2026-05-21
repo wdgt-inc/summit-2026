@@ -63,7 +63,8 @@
         "cards",
         "columns",
         "fragment",
-        "form"
+        "form",
+        "table"
       ]
     }
   ]

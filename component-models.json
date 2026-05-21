@@ -341,5 +341,17 @@
         ]
       }
     ]
+  },
+  {
+    "id": "table",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Table Content",
+        "valueType": "string"
+      }
+    ]
   }
 ]
