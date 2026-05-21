@@ -128,3 +128,67 @@
 .cards.pricing > ul > li > .cards-card-body:empty {
   display: none;
 }
+
+/* Cards Benefits Variant */
+.cards.benefits.block > ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (width >= 900px) {
+  .cards.benefits.block > ul {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cards.benefits.block > ul > li {
+  border: none;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.cards.benefits.block .cards-card-image {
+  display: none;
+}
+
+.cards.benefits.block > ul > li > .cards-card-body {
+  margin: 0;
+}
+
+.cards.benefits.block > ul > li > .cards-card-body:empty {
+  display: none;
+}
+
+.cards.benefits.block .cards-card-body > p:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: var(--body-font-size-s);
+  margin: 0 0 8px;
+}
+
+.cards.benefits.block .cards-card-body > p:first-child::before {
+  content: '';
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background-image: url('/icons/check-circle.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.cards.benefits.block .cards-card-body > p:nth-child(2) {
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+  color: var(--dark-color);
+  margin: 0;
+  padding-left: 28px;
+}
+
+.cards.benefits.block .cards-card-body .button-container {
+  display: none;
+}
