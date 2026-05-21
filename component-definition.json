@@ -192,6 +192,7 @@
                   "linkText": "Link text",
                   "linkTitle": "New link",
                   "linkType": "primary",
+                  "icon": "arrow-right",
                   "model": "hero-link"
                 }
               }

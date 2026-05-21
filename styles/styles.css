@@ -259,10 +259,36 @@ main .section.highlight {
   padding: 40px 0;
 }
 
-main .section.light > .default-content-wrapper,
-main .section.highlight > .default-content-wrapper {
+main .section.light > .default-content-wrapper {
   text-align: center;
   margin-bottom: 32px;
+}
+
+main .section.highlight ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+main .section.highlight ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+}
+
+main .section.highlight ul li::before {
+  content: '';
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  background-image: url('/icons/check-circle.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 main .section.blue {
@@ -279,4 +305,63 @@ main .section.blue p {
 
 main .section.blue p {
   opacity: 0.9;
+}
+
+main .section.dark {
+  background-color: #161616;
+  margin: 0 24px 40px;
+  padding: 32px;
+  border-radius: 4px;
+  max-width: 1200px;
+}
+
+main .section.dark > div {
+  max-width: unset;
+  padding: 0;
+}
+
+main .section.dark > .default-content-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+main .section.dark h2 {
+  color: #fff;
+  font-size: var(--heading-font-size-l);
+  margin: 0 0 8px;
+}
+
+main .section.dark p:not(.button-container) {
+  color: #c6c6c6;
+  margin: 0;
+}
+
+main .section.dark .button-container {
+  margin: 16px 0 0;
+}
+
+@media (width >= 900px) {
+  main .section.dark > .default-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 8px 32px;
+  }
+
+  main .section.dark h2 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  main .section.dark p:not(.button-container) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  main .section.dark .button-container {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    margin: 0;
+  }
 }

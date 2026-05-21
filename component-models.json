@@ -144,6 +144,10 @@
           {
             "name": "Blue",
             "value": "blue"
+          },
+          {
+            "name": "Dark",
+            "value": "dark"
           }
         ]
       }
@@ -310,6 +314,29 @@
           {
             "name": "secondary",
             "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "icon",
+        "label": "Icon",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Arrow",
+            "value": "arrow-right"
+          },
+          {
+            "name": "Download",
+            "value": "download"
+          },
+          {
+            "name": "Play",
+            "value": "play"
           }
         ]
       }
