@@ -29,6 +29,7 @@
               "linkText": "Link text",
               "linkTitle": "New link",
               "linkType": "primary",
+              "icon": "arrow-right",
               "model": "hero-link"
             }
           }
@@ -101,6 +102,29 @@
             {
               "name": "secondary",
               "value": "secondary"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Arrow",
+              "value": "arrow-right"
+            },
+            {
+              "name": "Download",
+              "value": "download"
+            },
+            {
+              "name": "Play",
+              "value": "play"
             }
           ]
         }

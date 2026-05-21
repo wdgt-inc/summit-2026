@@ -8,8 +8,11 @@ export default function decorate(block) {
   const titleCell = rows[1].querySelector('div');
   const subtitleCell = rows[2].querySelector('div');
 
+  const hasImage = imageCell.querySelector('picture');
   const imageDiv = document.createElement('div');
-  imageDiv.append(...imageCell.childNodes);
+  if (hasImage) {
+    imageDiv.append(...imageCell.childNodes);
+  }
 
   const textDiv = document.createElement('div');
 
@@ -32,16 +35,35 @@ export default function decorate(block) {
     const buttonContainer = document.createElement('p');
     buttonContainer.className = 'button-container';
     rows.slice(3).forEach((row) => {
+      const cells = row.querySelectorAll(':scope > div');
       const link = row.querySelector('a');
       if (link) {
-        // Preserve Universal Editor instrumentation on the link
         moveInstrumentation(row, link);
         link.classList.add('button');
+        // Check for icon in second cell
+        const iconCell = cells[1];
+        if (iconCell) {
+          const iconName = iconCell.textContent.trim();
+          if (iconName) {
+            const iconSpan = document.createElement('span');
+            iconSpan.className = `icon icon-${iconName}`;
+            const img = document.createElement('img');
+            img.src = `/icons/${iconName}.svg`;
+            img.alt = '';
+            img.loading = 'lazy';
+            iconSpan.append(img);
+            link.append(iconSpan);
+          }
+        }
         buttonContainer.append(link);
       }
     });
     textDiv.append(buttonContainer);
   }
 
-  block.replaceChildren(imageDiv, textDiv);
+  if (hasImage) {
+    block.replaceChildren(imageDiv, textDiv);
+  } else {
+    block.replaceChildren(textDiv);
+  }
 }

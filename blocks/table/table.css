@@ -1,0 +1,22 @@
+.table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--body-font-size-s);
+}
+
+.table th {
+  text-align: left;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--dark-color);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}

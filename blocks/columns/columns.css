@@ -19,15 +19,23 @@
   display: block;
 }
 
+.columns > div > div .icon {
+  vertical-align: middle;
+}
+
 @media (width >= 900px) {
   .columns > div {
-    align-items: center;
+    align-items: flex-start;
     flex-direction: unset;
-    gap: 24px;
+    gap: 48px;
   }
 
   .columns > div > div {
     flex: 1;
     order: unset;
   }
+}
+
+.columns > div + div {
+  margin-top: 32px;
 }

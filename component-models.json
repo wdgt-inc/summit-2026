@@ -144,6 +144,10 @@
           {
             "name": "Blue",
             "value": "blue"
+          },
+          {
+            "name": "Dark",
+            "value": "dark"
           }
         ]
       }
@@ -312,6 +316,41 @@
             "value": "secondary"
           }
         ]
+      },
+      {
+        "component": "select",
+        "name": "icon",
+        "label": "Icon",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Arrow",
+            "value": "arrow-right"
+          },
+          {
+            "name": "Download",
+            "value": "download"
+          },
+          {
+            "name": "Play",
+            "value": "play"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Table Content",
+        "valueType": "string"
       }
     ]
   }

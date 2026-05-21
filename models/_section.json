@@ -41,6 +41,10 @@
             {
               "name": "Blue",
               "value": "blue"
+            },
+            {
+              "name": "Dark",
+              "value": "dark"
             }
           ]
         }
@@ -59,7 +63,8 @@
         "cards",
         "columns",
         "fragment",
-        "form"
+        "form",
+        "table"
       ]
     }
   ]
