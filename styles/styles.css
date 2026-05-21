@@ -309,7 +309,7 @@ main .section.blue p {
 
 main .section.dark {
   background-color: #161616;
-  margin: 0 24px 40px;
+  margin: 0 auto 40px;
   padding: 32px;
   border-radius: 4px;
   max-width: 1200px;
