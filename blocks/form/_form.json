@@ -83,10 +83,10 @@
             "template": {
               "model": "form-checkbox-group",
               "fieldType": "checkbox-group",
-              "fieldName": "checkbox-group",
-              "label": "Checkbox Group",
-              "options": "Option 1, Option 2, Option 3",
-              "required": false
+              "fieldName": "interests",
+              "label": "Select Your Interests",
+              "options": "Technology, Design, Marketing",
+              "required": "false"
             }
           }
         }
