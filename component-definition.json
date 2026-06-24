@@ -142,7 +142,8 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Form",
-                  "model": "form"
+                  "model": "form",
+                  "filter": "form"
                 }
               }
             }
@@ -209,6 +210,66 @@
                 "template": {
                   "name": "Table",
                   "model": "table"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Form Text Field",
+          "id": "form-text-field",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Form Text Field",
+                  "model": "form-text-field"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Form Email Field",
+          "id": "form-email-field",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Form Email Field",
+                  "model": "form-email-field"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Form Checkbox Field",
+          "id": "form-checkbox-field",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Form Checkbox Field",
+                  "model": "form-checkbox-field"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Form Submit Button",
+          "id": "form-submit-button",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Form Submit Button",
+                  "model": "form-submit-button"
                 }
               }
             }
