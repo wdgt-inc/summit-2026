@@ -221,10 +221,10 @@ html.adobe-ue-edit .form .form-field-hidden {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  animation: fadeIn 0.3s ease-in-out;
+  animation: fade-in 0.3s ease-in-out;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
@@ -241,10 +241,10 @@ html.adobe-ue-edit .form .form-field-hidden {
   max-width: 500px;
   width: 90%;
   box-shadow: 0 4px 20px rgb(0 0 0 / 20%);
-  animation: slideUp 0.3s ease-in-out;
+  animation: slide-up 0.3s ease-in-out;
 }
 
-@keyframes slideUp {
+@keyframes slide-up {
   from {
     transform: translateY(20px);
     opacity: 0;
@@ -261,22 +261,39 @@ html.adobe-ue-edit .form .form-field-hidden {
   color: var(--text-color);
 }
 
+.form-thank-you-message * {
+  color: var(--text-color) !important;
+}
+
 .form-thank-you-message h1,
 .form-thank-you-message h2,
-.form-thank-you-message h3 {
+.form-thank-you-message h3,
+.form-thank-you-message h4,
+.form-thank-you-message h5,
+.form-thank-you-message h6 {
   margin-top: 0;
   margin-bottom: 16px;
-  color: var(--dark-color);
+  color: var(--dark-color) !important;
 }
 
 .form-thank-you-message p {
   margin: 0 0 12px;
   font-size: var(--body-font-size-m);
   line-height: 1.5;
+  color: var(--text-color) !important;
 }
 
 .form-thank-you-message p:last-child {
   margin-bottom: 0;
+}
+
+.form-thank-you-message strong,
+.form-thank-you-message b {
+  color: var(--dark-color) !important;
+}
+
+.form-thank-you-message a {
+  color: var(--blue-primary) !important;
 }
 
 .form-thank-you-close {

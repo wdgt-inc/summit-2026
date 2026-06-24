@@ -125,8 +125,8 @@ function createCheckboxGroup(row) {
   }
 
   // Parse options (comma-separated)
-  const options = optionsText.split(',').map(opt => opt.trim()).filter(opt => opt);
-  
+  const options = optionsText.split(',').map((opt) => opt.trim()).filter((opt) => opt);
+
   const checkboxesWrapper = document.createElement('div');
   checkboxesWrapper.className = 'checkbox-group-options';
 
@@ -207,17 +207,17 @@ function showThankYouOverlay(message, form) {
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'form-thank-you-overlay';
-  
+
   // Create overlay content
   const overlayContent = document.createElement('div');
   overlayContent.className = 'form-thank-you-content';
-  
+
   // Add the thank you message (supports HTML from rich text)
   const messageDiv = document.createElement('div');
   messageDiv.className = 'form-thank-you-message';
   messageDiv.innerHTML = message || '<p>Thank you for your submission!</p>';
   overlayContent.appendChild(messageDiv);
-  
+
   // Add close button
   const closeButton = document.createElement('button');
   closeButton.className = 'form-thank-you-close';
@@ -226,12 +226,12 @@ function showThankYouOverlay(message, form) {
     overlay.remove();
   });
   overlayContent.appendChild(closeButton);
-  
+
   overlay.appendChild(overlayContent);
-  
+
   // Add overlay to the form's parent container
   form.parentElement.appendChild(overlay);
-  
+
   // Auto-close after 5 seconds
   setTimeout(() => {
     if (overlay.parentElement) {
@@ -241,55 +241,80 @@ function showThankYouOverlay(message, form) {
 }
 
 export default function decorate(block) {
-  // Extract thank you message from block metadata
-  // The thankYouMessage will be in a div with data-aue-prop="thankYouMessage" or similar
+  // Extract thank you message from block
   let thankYouMessage = '';
-  
-  // Try to find thank you message in block's direct children or metadata
+
+  // Look for the thank you message in various possible locations
+  // 1. Check for data attribute on block itself
+  if (block.dataset.thankYouMessage) {
+    thankYouMessage = block.dataset.thankYouMessage;
+  }
+
+  // 2. Check for a div with specific data attribute
   const thankYouDiv = block.querySelector('[data-aue-prop="thankYouMessage"]');
-  if (thankYouDiv) {
+  if (!thankYouMessage && thankYouDiv) {
     thankYouMessage = thankYouDiv.innerHTML;
-  } else {
-    // Fallback: look for a div that's not a form field row
+  }
+
+  // 3. Look in block metadata (usually in a div before form fields)
+  if (!thankYouMessage) {
     const blockChildren = [...block.children];
     blockChildren.forEach((child) => {
+      // Check if this div has a data-aue-prop attribute
+      if (child.hasAttribute('data-aue-prop') && child.getAttribute('data-aue-prop') === 'thankYouMessage') {
+        thankYouMessage = child.innerHTML;
+        return;
+      }
+
+      // Check if this is a metadata row (has only one cell with content)
       const cells = [...child.children];
-      // Check if this is a thank you message row (not a field type row)
-      if (cells.length > 0 && !cells[0]?.textContent?.trim().match(/^(text|email|checkbox|checkbox-group|hidden|submit)$/i)) {
-        const possibleMessage = child.innerHTML;
-        if (possibleMessage && !thankYouMessage) {
-          thankYouMessage = possibleMessage;
+      if (cells.length === 1 && cells[0].innerHTML.trim()) {
+        // This might be our thank you message
+        const content = cells[0].innerHTML.trim();
+        // Make sure it's not a form field by checking if it starts with field type keywords
+        if (!content.match(/^(text|email|checkbox|checkbox-group|hidden|submit)\s*$/i)) {
+          thankYouMessage = content;
         }
       }
     });
   }
-  
+
+  // Store the thank you message before we process the block
+  const storedThankYouMessage = thankYouMessage;
+
+  // Log for debugging (can be removed in production)
+  // eslint-disable-next-line no-console
+  console.log('Thank you message extracted:', storedThankYouMessage);
+
   // Create form element
   const form = document.createElement('form');
   form.className = 'form-content';
+
+  // Store the thank you message on the form element so we can access it later
+  form.dataset.thankYouMessage = storedThankYouMessage;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     // Collect form data
     const formData = new FormData(form);
     const data = {};
-    
+
     // Helper function to set nested property using dot notation
     const setNestedProperty = (obj, path, value) => {
       const keys = path.split('.');
       let current = obj;
-      
-      for (let i = 0; i < keys.length - 1; i++) {
+
+      for (let i = 0; i < keys.length - 1; i += 1) {
         const key = keys[i];
         if (!current[key]) {
           current[key] = {};
         }
         current = current[key];
       }
-      
+
       current[keys[keys.length - 1]] = value;
     };
-    
+
     // Process form fields
     formData.forEach((value, key) => {
       // Handle checkbox groups (arrays)
@@ -304,7 +329,7 @@ export default function decorate(block) {
         setNestedProperty(data, key, value);
       }
     });
-    
+
     // Build the Adobe Experience Platform payload
     const payload = {
       header: {
@@ -335,15 +360,19 @@ export default function decorate(block) {
         },
       },
     };
-    
-    // Log the payload to console for verification
+
+    // Log the payload to console for verification (can be removed in production)
+    // eslint-disable-next-line no-console
     console.log('Form payload (not submitted):', JSON.stringify(payload, null, 2));
+    // eslint-disable-next-line no-console
     console.log('Payload object:', payload);
-    
+
     // Show thank you overlay and reset form
-    showThankYouOverlay(thankYouMessage, form);
+    // Get the stored message from the form's dataset
+    const messageToShow = form.dataset.thankYouMessage || '';
+    showThankYouOverlay(messageToShow, form);
     form.reset();
-    
+
     // TODO: Uncomment below to actually submit to Adobe Experience Platform
     /*
     try {
@@ -354,10 +383,11 @@ export default function decorate(block) {
         },
         body: JSON.stringify(payload),
       });
-      
+
       if (response.ok) {
         console.log('Form submitted successfully');
-        showThankYouOverlay(thankYouMessage, form);
+        const messageToShow = form.dataset.thankYouMessage || '';
+        showThankYouOverlay(messageToShow, form);
         form.reset();
       } else {
         console.error('Form submission failed:', response.status, response.statusText);
@@ -376,7 +406,7 @@ export default function decorate(block) {
     const cells = [...row.children];
     const fieldType = cells[0]?.textContent?.trim().toLowerCase();
     const blockName = row.getAttribute('data-block-name');
-    
+
     let fieldElement;
     // Check both fieldType (from HTML) and blockName (from data attribute)
     if (fieldType === 'text' || blockName === 'form-text-field') {
