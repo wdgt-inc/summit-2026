@@ -159,10 +159,20 @@
           "valueType": "string"
         },
         {
-          "component": "boolean",
+          "component": "select",
           "name": "required",
           "label": "Required",
-          "valueType": "boolean"
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
         }
       ]
     },
@@ -197,10 +207,20 @@
           "valueType": "string"
         },
         {
-          "component": "boolean",
+          "component": "select",
           "name": "required",
           "label": "Required",
-          "valueType": "boolean"
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
         }
       ]
     },
@@ -229,16 +249,36 @@
           "valueType": "string"
         },
         {
-          "component": "boolean",
+          "component": "select",
           "name": "required",
           "label": "Required",
-          "valueType": "boolean"
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
         },
         {
-          "component": "boolean",
+          "component": "select",
           "name": "checked",
           "label": "Default Checked",
-          "valueType": "boolean"
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
         }
       ]
     },
@@ -273,10 +313,20 @@
           "valueType": "string"
         },
         {
-          "component": "boolean",
+          "component": "select",
           "name": "required",
           "label": "Required",
-          "valueType": "boolean"
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
         }
       ]
     },
