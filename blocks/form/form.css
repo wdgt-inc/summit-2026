@@ -188,7 +188,7 @@
 }
 
 /* Show hidden fields in Universal Editor */
-body.editor .form .form-field-hidden {
+html.adobe-ue-preview .form .form-field-hidden {
   display: block;
 }
 
