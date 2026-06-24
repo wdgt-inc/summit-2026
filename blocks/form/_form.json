@@ -138,6 +138,13 @@
           "value": "",
           "label": "Form Title",
           "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "thankYouMessage",
+          "label": "Thank You Message",
+          "valueType": "string",
+          "description": "Message to display after successful form submission"
         }
       ]
     },

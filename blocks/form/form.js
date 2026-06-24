@@ -241,22 +241,28 @@ function showThankYouOverlay(message, form) {
 }
 
 export default function decorate(block) {
-  // Extract thank you message from block (first div with class that's not a form field)
+  // Extract thank you message from block metadata
+  // The thankYouMessage will be in a div with data-aue-prop="thankYouMessage" or similar
   let thankYouMessage = '';
-  const blockChildren = [...block.children];
   
-  // Look for a div that contains the thank you message (not a form field row)
-  blockChildren.forEach((child) => {
-    const cells = [...child.children];
-    // Check if this is a thank you message row (not a field type row)
-    if (cells.length > 0 && !cells[0]?.textContent?.trim().match(/^(text|email|checkbox|checkbox-group|hidden|submit)$/i)) {
-      // This might be our thank you message
-      const possibleMessage = child.innerHTML;
-      if (possibleMessage && !thankYouMessage) {
-        thankYouMessage = possibleMessage;
+  // Try to find thank you message in block's direct children or metadata
+  const thankYouDiv = block.querySelector('[data-aue-prop="thankYouMessage"]');
+  if (thankYouDiv) {
+    thankYouMessage = thankYouDiv.innerHTML;
+  } else {
+    // Fallback: look for a div that's not a form field row
+    const blockChildren = [...block.children];
+    blockChildren.forEach((child) => {
+      const cells = [...child.children];
+      // Check if this is a thank you message row (not a field type row)
+      if (cells.length > 0 && !cells[0]?.textContent?.trim().match(/^(text|email|checkbox|checkbox-group|hidden|submit)$/i)) {
+        const possibleMessage = child.innerHTML;
+        if (possibleMessage && !thankYouMessage) {
+          thankYouMessage = possibleMessage;
+        }
       }
-    }
-  });
+    });
+  }
   
   // Create form element
   const form = document.createElement('form');
