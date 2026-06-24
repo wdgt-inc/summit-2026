@@ -64,6 +64,16 @@
   margin-bottom: 16px;
 }
 
+.form .form-field-checkbox .field-title {
+  display: block;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.32px;
+  color: var(--dark-color);
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+
 .form .form-field-checkbox .checkbox-wrapper {
   display: flex;
   align-items: center;
@@ -77,7 +87,7 @@
   accent-color: var(--blue-primary);
 }
 
-.form .form-field-checkbox label {
+.form .form-field-checkbox .checkbox-wrapper label {
   margin-bottom: 0;
   cursor: pointer;
   font-size: var(--body-font-size-xs);
@@ -94,7 +104,7 @@
   letter-spacing: 0.32px;
   color: var(--dark-color);
   margin-bottom: 12px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .form .form-field-checkbox-group .checkbox-group-options {

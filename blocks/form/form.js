@@ -73,6 +73,17 @@ function createCheckboxField(row) {
   const required = cells[3]?.textContent?.trim() === 'true';
   const checked = cells[4]?.textContent?.trim() === 'true';
 
+  // Add field title like other fields
+  if (label) {
+    const titleEl = document.createElement('label');
+    titleEl.className = 'field-title';
+    titleEl.textContent = label;
+    if (required) {
+      titleEl.innerHTML += ' <span class="required">*</span>';
+    }
+    wrapper.appendChild(titleEl);
+  }
+
   const checkboxWrapper = document.createElement('div');
   checkboxWrapper.className = 'checkbox-wrapper';
 
