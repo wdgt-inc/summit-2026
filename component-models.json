@@ -253,7 +253,7 @@
         "value": "text",
         "label": "Field Type",
         "valueType": "string",
-        "readOnly": true
+        "hidden": true
       },
       {
         "component": "text",
@@ -301,7 +301,7 @@
         "value": "email",
         "label": "Field Type",
         "valueType": "string",
-        "readOnly": true
+        "hidden": true
       },
       {
         "component": "text",
@@ -349,7 +349,7 @@
         "value": "checkbox",
         "label": "Field Type",
         "valueType": "string",
-        "readOnly": true
+        "hidden": true
       },
       {
         "component": "text",
@@ -407,11 +407,11 @@
         "value": "checkbox-group",
         "label": "Field Type",
         "valueType": "string",
-        "readOnly": true
+        "hidden": true
       },
       {
         "component": "text",
-        "name": "name",
+        "name": "fieldName",
         "label": "Field Name",
         "description": "Unique identifier for this field group (used in form submission)",
         "valueType": "string"
@@ -455,7 +455,7 @@
         "value": "submit",
         "label": "Field Type",
         "valueType": "string",
-        "readOnly": true
+        "hidden": true
       },
       {
         "component": "text",
