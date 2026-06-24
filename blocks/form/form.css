@@ -187,8 +187,8 @@
   border-radius: 4px;
 }
 
-/* Show hidden fields in Universal Editor */
-html.adobe-ue-preview .form .form-field-hidden {
+/* Show hidden fields in Universal Editor edit mode only */
+html.adobe-ue-edit .form .form-field-hidden {
   display: block;
 }
 
