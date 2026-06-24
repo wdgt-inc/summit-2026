@@ -1,10 +1,14 @@
-function createTextField(item) {
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+function createTextField(row) {
   const wrapper = document.createElement('div');
   wrapper.className = 'form-field';
+  moveInstrumentation(row, wrapper);
 
-  const label = item.querySelector('[data-model-name="label"]')?.textContent?.trim() || '';
-  const placeholder = item.querySelector('[data-model-name="placeholder"]')?.textContent?.trim() || '';
-  const required = item.querySelector('[data-model-name="required"]')?.textContent?.trim() === 'true';
+  const cells = [...row.children];
+  const label = cells[0]?.textContent?.trim() || '';
+  const placeholder = cells[1]?.textContent?.trim() || '';
+  const required = cells[2]?.textContent?.trim() === 'true';
 
   if (label) {
     const labelEl = document.createElement('label');
@@ -26,13 +30,15 @@ function createTextField(item) {
   return wrapper;
 }
 
-function createEmailField(item) {
+function createEmailField(row) {
   const wrapper = document.createElement('div');
   wrapper.className = 'form-field';
+  moveInstrumentation(row, wrapper);
 
-  const label = item.querySelector('[data-model-name="label"]')?.textContent?.trim() || '';
-  const placeholder = item.querySelector('[data-model-name="placeholder"]')?.textContent?.trim() || '';
-  const required = item.querySelector('[data-model-name="required"]')?.textContent?.trim() === 'true';
+  const cells = [...row.children];
+  const label = cells[0]?.textContent?.trim() || '';
+  const placeholder = cells[1]?.textContent?.trim() || '';
+  const required = cells[2]?.textContent?.trim() === 'true';
 
   if (label) {
     const labelEl = document.createElement('label');
@@ -54,13 +60,15 @@ function createEmailField(item) {
   return wrapper;
 }
 
-function createCheckboxField(item) {
+function createCheckboxField(row) {
   const wrapper = document.createElement('div');
   wrapper.className = 'form-field form-field-checkbox';
+  moveInstrumentation(row, wrapper);
 
-  const label = item.querySelector('[data-model-name="label"]')?.textContent?.trim() || '';
-  const required = item.querySelector('[data-model-name="required"]')?.textContent?.trim() === 'true';
-  const checked = item.querySelector('[data-model-name="checked"]')?.textContent?.trim() === 'true';
+  const cells = [...row.children];
+  const label = cells[0]?.textContent?.trim() || '';
+  const required = cells[1]?.textContent?.trim() === 'true';
+  const checked = cells[2]?.textContent?.trim() === 'true';
 
   const checkboxWrapper = document.createElement('div');
   checkboxWrapper.className = 'checkbox-wrapper';
@@ -83,12 +91,14 @@ function createCheckboxField(item) {
   return wrapper;
 }
 
-function createSubmitButton(item) {
+function createSubmitButton(row) {
   const wrapper = document.createElement('div');
   wrapper.className = 'button-container';
+  moveInstrumentation(row, wrapper);
 
-  const text = item.querySelector('[data-model-name="text"]')?.textContent?.trim() || 'Submit';
-  const type = item.querySelector('[data-model-name="type"]')?.textContent?.trim() || 'primary';
+  const cells = [...row.children];
+  const text = cells[0]?.textContent?.trim() || 'Submit';
+  const type = cells[1]?.textContent?.trim() || 'primary';
 
   const button = document.createElement('button');
   button.type = 'submit';
@@ -100,10 +110,6 @@ function createSubmitButton(item) {
 }
 
 export default function decorate(block) {
-  // Get the form title if it exists
-  const titleElement = block.querySelector('[data-model-name="title"]');
-  const title = titleElement?.textContent?.trim();
-
   // Create form element
   const form = document.createElement('form');
   form.className = 'form-content';
@@ -115,33 +121,27 @@ export default function decorate(block) {
     // You can add your form submission logic here
   });
 
-  // Add title if it exists
-  if (title) {
-    const h3 = document.createElement('h3');
-    h3.textContent = title;
-    form.appendChild(h3);
-  }
-
-  // Process child components
-  const items = block.querySelectorAll(':scope > div > div');
-  items.forEach((item) => {
-    const componentName = item.getAttribute('data-block-name');
+  // Process each row (child) in the block
+  [...block.children].forEach((row) => {
+    // Check if this row has a data-block-name attribute to identify the field type
+    const blockName = row.getAttribute('data-block-name');
     
     let fieldElement;
-    switch (componentName) {
+    switch (blockName) {
       case 'form-text-field':
-        fieldElement = createTextField(item);
+        fieldElement = createTextField(row);
         break;
       case 'form-email-field':
-        fieldElement = createEmailField(item);
+        fieldElement = createEmailField(row);
         break;
       case 'form-checkbox-field':
-        fieldElement = createCheckboxField(item);
+        fieldElement = createCheckboxField(row);
         break;
       case 'form-submit-button':
-        fieldElement = createSubmitButton(item);
+        fieldElement = createSubmitButton(row);
         break;
       default:
+        // If no block name, skip this row
         return;
     }
 
@@ -151,8 +151,5 @@ export default function decorate(block) {
   });
 
   // Replace block content with form
-  block.textContent = '';
-  block.appendChild(form);
+  block.replaceChildren(form);
 }
-
-// Made with Bob
