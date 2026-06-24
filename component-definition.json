@@ -227,6 +227,23 @@
           }
         },
         {
+          "title": "Form Hidden Field",
+          "id": "form-hidden-field",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "form-hidden-field",
+                  "fieldType": "hidden",
+                  "fieldName": "eventName",
+                  "value": "Adobe Summit London 2026"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Form Submit Button",
           "id": "form-submit-button",
           "plugins": {
