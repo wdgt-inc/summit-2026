@@ -224,7 +224,10 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Form Text Field",
-                  "model": "form-text-field"
+                  "model": "form-text-field",
+                  "label": "Text Field",
+                  "placeholder": "Enter text",
+                  "required": false
                 }
               }
             }
@@ -239,7 +242,10 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Form Email Field",
-                  "model": "form-email-field"
+                  "model": "form-email-field",
+                  "label": "Email",
+                  "placeholder": "Enter email",
+                  "required": false
                 }
               }
             }
@@ -254,7 +260,10 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Form Checkbox Field",
-                  "model": "form-checkbox-field"
+                  "model": "form-checkbox-field",
+                  "label": "Checkbox",
+                  "required": false,
+                  "checked": false
                 }
               }
             }
@@ -269,7 +278,9 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Form Submit Button",
-                  "model": "form-submit-button"
+                  "model": "form-submit-button",
+                  "text": "Submit",
+                  "type": "primary"
                 }
               }
             }
