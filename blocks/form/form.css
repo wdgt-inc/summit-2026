@@ -176,3 +176,35 @@
 .section.blue .form p:last-child {
   color: var(--dark-color);
 }
+
+/* Hidden field styles - visible in editor, hidden on site */
+.form .form-field-hidden {
+  display: none;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #f4f4f4;
+  border: 1px dashed #8d8d8d;
+  border-radius: 4px;
+}
+
+/* Show hidden fields in Universal Editor */
+body.editor .form .form-field-hidden {
+  display: block;
+}
+
+.form .form-field-hidden .hidden-field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.33;
+  letter-spacing: 0.32px;
+  color: var(--dark-color);
+  margin-bottom: 4px;
+}
+
+.form .form-field-hidden .hidden-field-value {
+  font-size: 11px;
+  line-height: 1.33;
+  color: #525252;
+  font-style: italic;
+}
