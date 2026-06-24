@@ -203,7 +203,61 @@ function createSubmitButton(row) {
   return wrapper;
 }
 
+function showThankYouOverlay(message, form) {
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'form-thank-you-overlay';
+  
+  // Create overlay content
+  const overlayContent = document.createElement('div');
+  overlayContent.className = 'form-thank-you-content';
+  
+  // Add the thank you message (supports HTML from rich text)
+  const messageDiv = document.createElement('div');
+  messageDiv.className = 'form-thank-you-message';
+  messageDiv.innerHTML = message || '<p>Thank you for your submission!</p>';
+  overlayContent.appendChild(messageDiv);
+  
+  // Add close button
+  const closeButton = document.createElement('button');
+  closeButton.className = 'form-thank-you-close';
+  closeButton.textContent = 'Close';
+  closeButton.addEventListener('click', () => {
+    overlay.remove();
+  });
+  overlayContent.appendChild(closeButton);
+  
+  overlay.appendChild(overlayContent);
+  
+  // Add overlay to the form's parent container
+  form.parentElement.appendChild(overlay);
+  
+  // Auto-close after 5 seconds
+  setTimeout(() => {
+    if (overlay.parentElement) {
+      overlay.remove();
+    }
+  }, 5000);
+}
+
 export default function decorate(block) {
+  // Extract thank you message from block (first div with class that's not a form field)
+  let thankYouMessage = '';
+  const blockChildren = [...block.children];
+  
+  // Look for a div that contains the thank you message (not a form field row)
+  blockChildren.forEach((child) => {
+    const cells = [...child.children];
+    // Check if this is a thank you message row (not a field type row)
+    if (cells.length > 0 && !cells[0]?.textContent?.trim().match(/^(text|email|checkbox|checkbox-group|hidden|submit)$/i)) {
+      // This might be our thank you message
+      const possibleMessage = child.innerHTML;
+      if (possibleMessage && !thankYouMessage) {
+        thankYouMessage = possibleMessage;
+      }
+    }
+  });
+  
   // Create form element
   const form = document.createElement('form');
   form.className = 'form-content';
@@ -280,6 +334,10 @@ export default function decorate(block) {
     console.log('Form payload (not submitted):', JSON.stringify(payload, null, 2));
     console.log('Payload object:', payload);
     
+    // Show thank you overlay and reset form
+    showThankYouOverlay(thankYouMessage, form);
+    form.reset();
+    
     // TODO: Uncomment below to actually submit to Adobe Experience Platform
     /*
     try {
@@ -293,7 +351,7 @@ export default function decorate(block) {
       
       if (response.ok) {
         console.log('Form submitted successfully');
-        alert('Thank you for your submission!');
+        showThankYouOverlay(thankYouMessage, form);
         form.reset();
       } else {
         console.error('Form submission failed:', response.status, response.statusText);

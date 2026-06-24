@@ -208,3 +208,91 @@ html.adobe-ue-edit .form .form-field-hidden {
   color: #525252;
   font-style: italic;
 }
+
+/* Thank you overlay styles */
+.form-thank-you-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.form-thank-you-content {
+  background-color: var(--light-color);
+  padding: 40px;
+  border-radius: 4px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 20%);
+  animation: slideUp 0.3s ease-in-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.form-thank-you-message {
+  margin-bottom: 24px;
+  color: var(--text-color);
+}
+
+.form-thank-you-message h1,
+.form-thank-you-message h2,
+.form-thank-you-message h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--dark-color);
+}
+
+.form-thank-you-message p {
+  margin: 0 0 12px;
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+}
+
+.form-thank-you-message p:last-child {
+  margin-bottom: 0;
+}
+
+.form-thank-you-close {
+  background-color: var(--blue-primary);
+  color: var(--light-color);
+  border: none;
+  padding: 11px 24px;
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0;
+  font-family: var(--body-font-family);
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.form-thank-you-close:hover {
+  background-color: #0353e9;
+}

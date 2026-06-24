@@ -236,8 +236,8 @@
                 "template": {
                   "model": "form-hidden-field",
                   "fieldType": "hidden",
-                  "fieldName": "eventName",
-                  "value": "Adobe Summit London 2026"
+                  "fieldName": "hiddedItem",
+                  "value": "Value to Submit"
                 }
               }
             }
