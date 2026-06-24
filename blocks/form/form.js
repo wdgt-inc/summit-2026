@@ -69,15 +69,16 @@ function createCheckboxField(row) {
 
   const cells = [...row.children];
   const fieldName = cells[1]?.textContent?.trim() || '';
-  const label = cells[2]?.textContent?.trim() || '';
-  const required = cells[3]?.textContent?.trim() === 'true';
-  const checked = cells[4]?.textContent?.trim() === 'true';
+  const title = cells[2]?.textContent?.trim() || '';
+  const label = cells[3]?.textContent?.trim() || '';
+  const required = cells[4]?.textContent?.trim() === 'true';
+  const checked = cells[5]?.textContent?.trim() === 'true';
 
-  // Add field title like other fields
-  if (label) {
+  // Add field title (with required asterisk if needed)
+  if (title) {
     const titleEl = document.createElement('label');
     titleEl.className = 'field-title';
-    titleEl.textContent = label;
+    titleEl.textContent = title;
     if (required) {
       titleEl.innerHTML += ' <span class="required">*</span>';
     }
@@ -92,13 +93,11 @@ function createCheckboxField(row) {
   input.className = 'form-checkbox';
   if (required) input.required = true;
   if (checked) input.checked = true;
-  input.name = fieldName || label.toLowerCase().replace(/\s+/g, '-');
+  input.name = fieldName || (title || label).toLowerCase().replace(/\s+/g, '-');
 
   const labelEl = document.createElement('label');
   labelEl.textContent = label;
-  if (required) {
-    labelEl.innerHTML += ' <span class="required">*</span>';
-  }
+  // No required asterisk on the label - only on the title
 
   checkboxWrapper.append(input, labelEl);
   wrapper.appendChild(checkboxWrapper);

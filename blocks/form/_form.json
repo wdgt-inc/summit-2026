@@ -64,10 +64,11 @@
             "template": {
               "model": "form-checkbox-field",
               "fieldType": "checkbox",
-              "fieldName": "checkbox",
-              "label": "Checkbox",
-              "required": false,
-              "checked": false
+              "fieldName": "agree-terms",
+              "title": "Terms and Conditions",
+              "label": "I agree to the terms and conditions",
+              "required": "false",
+              "checked": "false"
             }
           }
         }
@@ -239,8 +240,16 @@
         },
         {
           "component": "text",
+          "name": "title",
+          "label": "Title",
+          "description": "Title displayed above the checkbox",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
           "name": "label",
           "label": "Label",
+          "description": "Label displayed next to the checkbox",
           "valueType": "string"
         },
         {

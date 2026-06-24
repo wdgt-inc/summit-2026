@@ -197,10 +197,11 @@
                 "template": {
                   "model": "form-checkbox-field",
                   "fieldType": "checkbox",
-                  "fieldName": "checkbox",
-                  "label": "Checkbox",
-                  "required": false,
-                  "checked": false
+                  "fieldName": "agree-terms",
+                  "title": "Terms and Conditions",
+                  "label": "I agree to the terms and conditions",
+                  "required": "false",
+                  "checked": "false"
                 }
               }
             }
