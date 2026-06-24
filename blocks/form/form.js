@@ -361,20 +361,13 @@ export default function decorate(block) {
       },
     };
 
-    // Log the payload to console for verification (can be removed in production)
+    // Log the payload to console for verification
     // eslint-disable-next-line no-console
-    console.log('Form payload (not submitted):', JSON.stringify(payload, null, 2));
+    console.log('Form payload:', JSON.stringify(payload, null, 2));
     // eslint-disable-next-line no-console
     console.log('Payload object:', payload);
 
-    // Show thank you overlay and reset form
-    // Get the stored message from the form's dataset
-    const messageToShow = form.dataset.thankYouMessage || '';
-    showThankYouOverlay(messageToShow, form);
-    form.reset();
-
-    // TODO: Uncomment below to actually submit to Adobe Experience Platform
-    /*
+    // Submit to Adobe Experience Platform
     try {
       const response = await fetch('https://dcs.adobedc.net/collection/d159a06882a86f910bae90242ec40400641434995273556aac8dae8677b21891', {
         method: 'POST',
@@ -385,19 +378,21 @@ export default function decorate(block) {
       });
 
       if (response.ok) {
+        // eslint-disable-next-line no-console
         console.log('Form submitted successfully');
         const messageToShow = form.dataset.thankYouMessage || '';
         showThankYouOverlay(messageToShow, form);
         form.reset();
       } else {
+        // eslint-disable-next-line no-console
         console.error('Form submission failed:', response.status, response.statusText);
         alert('There was an error submitting the form. Please try again.');
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Form submission error:', error);
       alert('There was an error submitting the form. Please try again.');
     }
-    */
   });
 
   // Process each row (child) in the block
