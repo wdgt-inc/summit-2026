@@ -257,7 +257,7 @@
       },
       {
         "component": "text",
-        "name": "name",
+        "name": "fieldName",
         "label": "Field Name",
         "description": "Unique identifier for this field (used in form submission)",
         "valueType": "string"
@@ -305,7 +305,7 @@
       },
       {
         "component": "text",
-        "name": "name",
+        "name": "fieldName",
         "label": "Field Name",
         "description": "Unique identifier for this field (used in form submission)",
         "valueType": "string"
@@ -353,7 +353,7 @@
       },
       {
         "component": "text",
-        "name": "name",
+        "name": "fieldName",
         "label": "Field Name",
         "description": "Unique identifier for this field (used in form submission)",
         "valueType": "string"

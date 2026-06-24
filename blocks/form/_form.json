@@ -27,7 +27,7 @@
               "name": "Form Text Field",
               "model": "form-text-field",
               "fieldType": "text",
-              "name": "text-field",
+              "fieldName": "text-field",
               "label": "Text Field",
               "placeholder": "Enter text",
               "required": false
@@ -47,7 +47,7 @@
               "name": "Form Email Field",
               "model": "form-email-field",
               "fieldType": "email",
-              "name": "email",
+              "fieldName": "email",
               "label": "Email",
               "placeholder": "Enter email",
               "required": false
@@ -67,7 +67,7 @@
               "name": "Form Checkbox Field",
               "model": "form-checkbox-field",
               "fieldType": "checkbox",
-              "name": "checkbox",
+              "fieldName": "checkbox",
               "label": "Checkbox",
               "required": false,
               "checked": false
@@ -87,7 +87,7 @@
               "name": "Form Checkbox Group",
               "model": "form-checkbox-group",
               "fieldType": "checkbox-group",
-              "name": "checkbox-group",
+              "fieldName": "checkbox-group",
               "label": "Checkbox Group",
               "options": "Option 1, Option 2, Option 3",
               "required": false
@@ -141,7 +141,7 @@
         },
         {
           "component": "text",
-          "name": "name",
+          "name": "fieldName",
           "label": "Field Name",
           "description": "Unique identifier for this field (used in form submission)",
           "valueType": "string"
@@ -189,7 +189,7 @@
         },
         {
           "component": "text",
-          "name": "name",
+          "name": "fieldName",
           "label": "Field Name",
           "description": "Unique identifier for this field (used in form submission)",
           "valueType": "string"
@@ -237,7 +237,7 @@
         },
         {
           "component": "text",
-          "name": "name",
+          "name": "fieldName",
           "label": "Field Name",
           "description": "Unique identifier for this field (used in form submission)",
           "valueType": "string"

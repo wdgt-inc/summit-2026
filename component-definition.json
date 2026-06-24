@@ -157,9 +157,10 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "text-field",
+                  "name": "Form Text Field",
                   "model": "form-text-field",
                   "fieldType": "text",
+                  "fieldName": "text-field",
                   "label": "Text Field",
                   "placeholder": "Enter text",
                   "required": false
@@ -176,9 +177,10 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "email",
+                  "name": "Form Email Field",
                   "model": "form-email-field",
                   "fieldType": "email",
+                  "fieldName": "email",
                   "label": "Email",
                   "placeholder": "Enter email",
                   "required": false
@@ -195,9 +197,10 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "checkbox",
+                  "name": "Form Checkbox Field",
                   "model": "form-checkbox-field",
                   "fieldType": "checkbox",
+                  "fieldName": "checkbox",
                   "label": "Checkbox",
                   "required": false,
                   "checked": false
@@ -214,9 +217,10 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "checkbox-group",
+                  "name": "Form Checkbox Group",
                   "model": "form-checkbox-group",
                   "fieldType": "checkbox-group",
+                  "fieldName": "checkbox-group",
                   "label": "Checkbox Group",
                   "options": "Option 1, Option 2, Option 3",
                   "required": false
