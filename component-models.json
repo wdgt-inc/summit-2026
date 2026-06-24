@@ -236,11 +236,106 @@
     "id": "form",
     "fields": [
       {
-        "component": "richtext",
-        "name": "text",
+        "component": "text",
+        "name": "title",
         "value": "",
-        "label": "Text",
+        "label": "Form Title",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "form-text-field",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "placeholder",
+        "label": "Placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "name": "required",
+        "label": "Required",
+        "valueType": "boolean"
+      }
+    ]
+  },
+  {
+    "id": "form-email-field",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "placeholder",
+        "label": "Placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "name": "required",
+        "label": "Required",
+        "valueType": "boolean"
+      }
+    ]
+  },
+  {
+    "id": "form-checkbox-field",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "name": "required",
+        "label": "Required",
+        "valueType": "boolean"
+      },
+      {
+        "component": "boolean",
+        "name": "checked",
+        "label": "Default Checked",
+        "valueType": "boolean"
+      }
+    ]
+  },
+  {
+    "id": "form-submit-button",
+    "fields": [
+      {
+        "component": "text",
+        "name": "text",
+        "label": "Button Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Button Type",
+        "options": [
+          {
+            "name": "primary",
+            "value": "primary"
+          },
+          {
+            "name": "secondary",
+            "value": "secondary"
+          }
+        ]
       }
     ]
   },

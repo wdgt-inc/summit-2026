@@ -42,18 +42,18 @@
     ]
   },
   {
-    "id": "hero",
-    "components": [
-      "hero-link"
-    ]
-  },
-  {
     "id": "form",
     "components": [
       "form-text-field",
       "form-email-field",
       "form-checkbox-field",
       "form-submit-button"
+    ]
+  },
+  {
+    "id": "hero",
+    "components": [
+      "hero-link"
     ]
   }
 ]
