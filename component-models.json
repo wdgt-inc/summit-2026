@@ -249,6 +249,13 @@
     "fields": [
       {
         "component": "text",
+        "name": "fieldType",
+        "value": "text",
+        "label": "Field Type",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "name": "label",
         "label": "Label",
         "valueType": "string"
@@ -270,6 +277,13 @@
   {
     "id": "form-email-field",
     "fields": [
+      {
+        "component": "text",
+        "name": "fieldType",
+        "value": "email",
+        "label": "Field Type",
+        "valueType": "string"
+      },
       {
         "component": "text",
         "name": "label",
@@ -295,6 +309,13 @@
     "fields": [
       {
         "component": "text",
+        "name": "fieldType",
+        "value": "checkbox",
+        "label": "Field Type",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "name": "label",
         "label": "Label",
         "valueType": "string"
@@ -316,6 +337,13 @@
   {
     "id": "form-submit-button",
     "fields": [
+      {
+        "component": "text",
+        "name": "fieldType",
+        "value": "submit",
+        "label": "Field Type",
+        "valueType": "string"
+      },
       {
         "component": "text",
         "name": "text",

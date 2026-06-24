@@ -6,9 +6,9 @@ function createTextField(row) {
   moveInstrumentation(row, wrapper);
 
   const cells = [...row.children];
-  const label = cells[0]?.textContent?.trim() || '';
-  const placeholder = cells[1]?.textContent?.trim() || '';
-  const required = cells[2]?.textContent?.trim() === 'true';
+  const label = cells[1]?.textContent?.trim() || '';
+  const placeholder = cells[2]?.textContent?.trim() || '';
+  const required = cells[3]?.textContent?.trim() === 'true';
 
   if (label) {
     const labelEl = document.createElement('label');
@@ -36,9 +36,9 @@ function createEmailField(row) {
   moveInstrumentation(row, wrapper);
 
   const cells = [...row.children];
-  const label = cells[0]?.textContent?.trim() || '';
-  const placeholder = cells[1]?.textContent?.trim() || '';
-  const required = cells[2]?.textContent?.trim() === 'true';
+  const label = cells[1]?.textContent?.trim() || '';
+  const placeholder = cells[2]?.textContent?.trim() || '';
+  const required = cells[3]?.textContent?.trim() === 'true';
 
   if (label) {
     const labelEl = document.createElement('label');
@@ -66,9 +66,9 @@ function createCheckboxField(row) {
   moveInstrumentation(row, wrapper);
 
   const cells = [...row.children];
-  const label = cells[0]?.textContent?.trim() || '';
-  const required = cells[1]?.textContent?.trim() === 'true';
-  const checked = cells[2]?.textContent?.trim() === 'true';
+  const label = cells[1]?.textContent?.trim() || '';
+  const required = cells[2]?.textContent?.trim() === 'true';
+  const checked = cells[3]?.textContent?.trim() === 'true';
 
   const checkboxWrapper = document.createElement('div');
   checkboxWrapper.className = 'checkbox-wrapper';
@@ -97,8 +97,8 @@ function createSubmitButton(row) {
   moveInstrumentation(row, wrapper);
 
   const cells = [...row.children];
-  const text = cells[0]?.textContent?.trim() || 'Submit';
-  const type = cells[1]?.textContent?.trim() || 'primary';
+  const text = cells[1]?.textContent?.trim() || 'Submit';
+  const type = cells[2]?.textContent?.trim() || 'primary';
 
   const button = document.createElement('button');
   button.type = 'submit';
@@ -123,26 +123,21 @@ export default function decorate(block) {
 
   // Process each row (child) in the block
   [...block.children].forEach((row) => {
-    // Check if this row has a data-block-name attribute to identify the field type
+    // Get the field type from the first cell or data-block-name attribute
+    const cells = [...row.children];
+    const fieldType = cells[0]?.textContent?.trim().toLowerCase();
     const blockName = row.getAttribute('data-block-name');
     
     let fieldElement;
-    switch (blockName) {
-      case 'form-text-field':
-        fieldElement = createTextField(row);
-        break;
-      case 'form-email-field':
-        fieldElement = createEmailField(row);
-        break;
-      case 'form-checkbox-field':
-        fieldElement = createCheckboxField(row);
-        break;
-      case 'form-submit-button':
-        fieldElement = createSubmitButton(row);
-        break;
-      default:
-        // If no block name, skip this row
-        return;
+    // Check both fieldType (from HTML) and blockName (from data attribute)
+    if (fieldType === 'text' || blockName === 'form-text-field') {
+      fieldElement = createTextField(row);
+    } else if (fieldType === 'email' || blockName === 'form-email-field') {
+      fieldElement = createEmailField(row);
+    } else if (fieldType === 'checkbox' || blockName === 'form-checkbox-field') {
+      fieldElement = createCheckboxField(row);
+    } else if (fieldType === 'submit' || blockName === 'form-submit-button') {
+      fieldElement = createSubmitButton(row);
     }
 
     if (fieldElement) {

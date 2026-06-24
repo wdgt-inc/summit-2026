@@ -159,6 +159,7 @@
                 "template": {
                   "name": "Form Text Field",
                   "model": "form-text-field",
+                  "fieldType": "text",
                   "label": "Text Field",
                   "placeholder": "Enter text",
                   "required": false
@@ -177,6 +178,7 @@
                 "template": {
                   "name": "Form Email Field",
                   "model": "form-email-field",
+                  "fieldType": "email",
                   "label": "Email",
                   "placeholder": "Enter email",
                   "required": false
@@ -195,6 +197,7 @@
                 "template": {
                   "name": "Form Checkbox Field",
                   "model": "form-checkbox-field",
+                  "fieldType": "checkbox",
                   "label": "Checkbox",
                   "required": false,
                   "checked": false
@@ -213,6 +216,7 @@
                 "template": {
                   "name": "Form Submit Button",
                   "model": "form-submit-button",
+                  "fieldType": "submit",
                   "text": "Submit",
                   "type": "primary"
                 }
