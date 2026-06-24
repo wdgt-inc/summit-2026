@@ -21,14 +21,31 @@
       "id": "form",
       "fields": [
         {
-          "component": "richtext",
-          "name": "text",
+          "component": "text",
+          "name": "title",
           "value": "",
-          "label": "Text",
+          "label": "Form Title",
           "valueType": "string"
+        },
+        {
+          "component": "multiselect",
+          "name": "fields",
+          "label": "Form Fields",
+          "valueType": "string",
+          "multi": true
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "form",
+      "components": [
+        "form-text-field",
+        "form-email-field",
+        "form-checkbox-field",
+        "form-submit-button"
+      ]
+    }
+  ]
 }

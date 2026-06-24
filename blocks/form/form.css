@@ -59,6 +59,62 @@
   margin: 0;
 }
 
+.form .form-field-checkbox {
+  margin-bottom: 16px;
+}
+
+.form .form-field-checkbox .checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form .form-field-checkbox .form-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--blue-primary);
+}
+
+.form .form-field-checkbox label {
+  margin-bottom: 0;
+  cursor: pointer;
+  font-size: var(--body-font-size-xs);
+}
+
+.form .required {
+  color: #da1e28;
+  margin-left: 2px;
+}
+
+.form .button-container button {
+  background-color: var(--blue-primary);
+  color: var(--light-color);
+  border: none;
+  padding: 11px 24px;
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0;
+  font-family: var(--body-font-family);
+  transition: background-color 0.2s;
+}
+
+.form .button-container button:hover {
+  background-color: #0353e9;
+}
+
+.form .button-container button.secondary {
+  background-color: transparent;
+  color: var(--blue-primary);
+  border: 1px solid var(--blue-primary);
+}
+
+.form .button-container button.secondary:hover {
+  background-color: var(--blue-primary);
+  color: var(--light-color);
+}
+
 .form p:last-child {
   font-size: var(--body-font-size-s);
   color: var(--dark-color);
