@@ -207,6 +207,25 @@
           }
         },
         {
+          "title": "Form Checkbox Group",
+          "id": "form-checkbox-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Form Checkbox Group",
+                  "model": "form-checkbox-group",
+                  "fieldType": "checkbox-group",
+                  "label": "Checkbox Group",
+                  "options": "Option 1, Option 2, Option 3",
+                  "required": false
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Form Submit Button",
           "id": "form-submit-button",
           "plugins": {

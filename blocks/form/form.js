@@ -91,6 +91,54 @@ function createCheckboxField(row) {
   return wrapper;
 }
 
+function createCheckboxGroup(row) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'form-field form-field-checkbox-group';
+  moveInstrumentation(row, wrapper);
+
+  const cells = [...row.children];
+  const label = cells[1]?.textContent?.trim() || '';
+  const optionsText = cells[2]?.textContent?.trim() || '';
+  const required = cells[3]?.textContent?.trim() === 'true';
+
+  if (label) {
+    const labelEl = document.createElement('label');
+    labelEl.textContent = label;
+    if (required) {
+      labelEl.innerHTML += ' <span class="required">*</span>';
+    }
+    wrapper.appendChild(labelEl);
+  }
+
+  // Parse options (comma-separated)
+  const options = optionsText.split(',').map(opt => opt.trim()).filter(opt => opt);
+  
+  const checkboxesWrapper = document.createElement('div');
+  checkboxesWrapper.className = 'checkbox-group-options';
+
+  options.forEach((option, index) => {
+    const checkboxWrapper = document.createElement('div');
+    checkboxWrapper.className = 'checkbox-wrapper';
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.className = 'form-checkbox';
+    input.name = label ? `${label.toLowerCase().replace(/\s+/g, '-')}[]` : `checkbox-group-${index}`;
+    input.value = option;
+    input.id = `${input.name}-${index}`;
+
+    const optionLabel = document.createElement('label');
+    optionLabel.textContent = option;
+    optionLabel.htmlFor = input.id;
+
+    checkboxWrapper.append(input, optionLabel);
+    checkboxesWrapper.appendChild(checkboxWrapper);
+  });
+
+  wrapper.appendChild(checkboxesWrapper);
+  return wrapper;
+}
+
 function createSubmitButton(row) {
   const wrapper = document.createElement('div');
   wrapper.className = 'button-container';
@@ -136,6 +184,8 @@ export default function decorate(block) {
       fieldElement = createEmailField(row);
     } else if (fieldType === 'checkbox' || blockName === 'form-checkbox-field') {
       fieldElement = createCheckboxField(row);
+    } else if (fieldType === 'checkbox-group' || blockName === 'form-checkbox-group') {
+      fieldElement = createCheckboxGroup(row);
     } else if (fieldType === 'submit' || blockName === 'form-submit-button') {
       fieldElement = createSubmitButton(row);
     }

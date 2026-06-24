@@ -47,6 +47,7 @@
       "form-text-field",
       "form-email-field",
       "form-checkbox-field",
+      "form-checkbox-group",
       "form-submit-button"
     ]
   },

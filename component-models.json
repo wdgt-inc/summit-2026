@@ -335,6 +335,36 @@
     ]
   },
   {
+    "id": "form-checkbox-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "fieldType",
+        "value": "checkbox-group",
+        "label": "Field Type",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Group Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "options",
+        "label": "Options (comma-separated)",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "name": "required",
+        "label": "Required",
+        "valueType": "boolean"
+      }
+    ]
+  },
+  {
     "id": "form-submit-button",
     "fields": [
       {
