@@ -9,7 +9,119 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Form",
+              "filter": "form",
               "model": "form"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Text Field",
+      "id": "form-text-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "form-text-field",
+              "fieldType": "text",
+              "fieldName": "text-field",
+              "label": "Text Field",
+              "placeholder": "Enter text",
+              "required": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Email Field",
+      "id": "form-email-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "form-email-field",
+              "fieldType": "email",
+              "fieldName": "email",
+              "label": "Email",
+              "placeholder": "Enter email",
+              "required": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Checkbox Field",
+      "id": "form-checkbox-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "form-checkbox-field",
+              "fieldType": "checkbox",
+              "fieldName": "agree-terms",
+              "title": "Terms and Conditions",
+              "label": "I agree to the terms and conditions",
+              "required": "false",
+              "checked": "false"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Checkbox Group",
+      "id": "form-checkbox-group",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "form-checkbox-group",
+              "fieldType": "checkbox-group",
+              "fieldName": "interests",
+              "label": "Select Your Interests",
+              "options": "Technology, Design, Marketing",
+              "required": "false"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Hidden Field",
+      "id": "form-hidden-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "form-hidden-field",
+              "fieldType": "hidden",
+              "fieldName": "hiddedItem",
+              "value": "Value to Submit"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Submit Button",
+      "id": "form-submit-button",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "form-submit-button",
+              "fieldType": "submit",
+              "text": "Submit",
+              "type": "primary"
             }
           }
         }
@@ -21,14 +133,302 @@
       "id": "form",
       "fields": [
         {
-          "component": "richtext",
-          "name": "text",
+          "component": "text",
+          "name": "title",
           "value": "",
-          "label": "Text",
+          "label": "Form Title",
           "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "thankYouMessage",
+          "label": "Thank You Message",
+          "valueType": "string",
+          "description": "Message to display after successful form submission"
+        }
+      ]
+    },
+    {
+      "id": "form-text-field",
+      "fields": [
+        {
+          "component": "text",
+          "name": "fieldType",
+          "value": "text",
+          "label": "Field Type",
+          "valueType": "string",
+          "hidden": true
+        },
+        {
+          "component": "text",
+          "name": "fieldName",
+          "label": "Field Name",
+          "description": "Unique identifier for this field (used in form submission)",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "placeholder",
+          "label": "Placeholder",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "required",
+          "label": "Required",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "form-email-field",
+      "fields": [
+        {
+          "component": "text",
+          "name": "fieldType",
+          "value": "email",
+          "label": "Field Type",
+          "valueType": "string",
+          "hidden": true
+        },
+        {
+          "component": "text",
+          "name": "fieldName",
+          "label": "Field Name",
+          "description": "Unique identifier for this field (used in form submission)",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "placeholder",
+          "label": "Placeholder",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "required",
+          "label": "Required",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "form-checkbox-field",
+      "fields": [
+        {
+          "component": "text",
+          "name": "fieldType",
+          "value": "checkbox",
+          "label": "Field Type",
+          "valueType": "string",
+          "hidden": true
+        },
+        {
+          "component": "text",
+          "name": "fieldName",
+          "label": "Field Name",
+          "description": "Unique identifier for this field (used in form submission)",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Title",
+          "description": "Title displayed above the checkbox",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Label",
+          "description": "Label displayed next to the checkbox",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "required",
+          "label": "Required",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "checked",
+          "label": "Default Checked",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "form-checkbox-group",
+      "fields": [
+        {
+          "component": "text",
+          "name": "fieldType",
+          "value": "checkbox-group",
+          "label": "Field Type",
+          "valueType": "string",
+          "hidden": true
+        },
+        {
+          "component": "text",
+          "name": "fieldName",
+          "label": "Field Name",
+          "description": "Unique identifier for this field group (used in form submission)",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Group Label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "options",
+          "label": "Options (comma-separated)",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "required",
+          "label": "Required",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "form-hidden-field",
+      "fields": [
+        {
+          "component": "text",
+          "name": "fieldType",
+          "label": "Field Type",
+          "valueType": "string",
+          "value": "hidden"
+        },
+        {
+          "component": "text",
+          "name": "fieldName",
+          "label": "Field Name",
+          "valueType": "string",
+          "description": "Use dot notation for nested fields (e.g., eventName or email.address)"
+        },
+        {
+          "component": "text",
+          "name": "value",
+          "label": "Value",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "form-submit-button",
+      "fields": [
+        {
+          "component": "text",
+          "name": "fieldType",
+          "value": "submit",
+          "label": "Field Type",
+          "valueType": "string",
+          "hidden": true
+        },
+        {
+          "component": "text",
+          "name": "text",
+          "label": "Button Text",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "type",
+          "label": "Button Type",
+          "options": [
+            {
+              "name": "primary",
+              "value": "primary"
+            },
+            {
+              "name": "secondary",
+              "value": "secondary"
+            }
+          ]
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "form",
+      "components": [
+        "form-text-field",
+        "form-email-field",
+        "form-checkbox-field",
+        "form-checkbox-group",
+        "form-hidden-field",
+        "form-submit-button"
+      ]
+    }
+  ]
 }
