@@ -27,6 +27,7 @@
               "name": "Form Text Field",
               "model": "form-text-field",
               "fieldType": "text",
+              "name": "text-field",
               "label": "Text Field",
               "placeholder": "Enter text",
               "required": false
@@ -46,6 +47,7 @@
               "name": "Form Email Field",
               "model": "form-email-field",
               "fieldType": "email",
+              "name": "email",
               "label": "Email",
               "placeholder": "Enter email",
               "required": false
@@ -65,6 +67,7 @@
               "name": "Form Checkbox Field",
               "model": "form-checkbox-field",
               "fieldType": "checkbox",
+              "name": "checkbox",
               "label": "Checkbox",
               "required": false,
               "checked": false
@@ -84,6 +87,7 @@
               "name": "Form Checkbox Group",
               "model": "form-checkbox-group",
               "fieldType": "checkbox-group",
+              "name": "checkbox-group",
               "label": "Checkbox Group",
               "options": "Option 1, Option 2, Option 3",
               "required": false
@@ -132,6 +136,14 @@
           "name": "fieldType",
           "value": "text",
           "label": "Field Type",
+          "valueType": "string",
+          "readOnly": true
+        },
+        {
+          "component": "text",
+          "name": "name",
+          "label": "Field Name",
+          "description": "Unique identifier for this field (used in form submission)",
           "valueType": "string"
         },
         {
@@ -162,6 +174,14 @@
           "name": "fieldType",
           "value": "email",
           "label": "Field Type",
+          "valueType": "string",
+          "readOnly": true
+        },
+        {
+          "component": "text",
+          "name": "name",
+          "label": "Field Name",
+          "description": "Unique identifier for this field (used in form submission)",
           "valueType": "string"
         },
         {
@@ -192,6 +212,14 @@
           "name": "fieldType",
           "value": "checkbox",
           "label": "Field Type",
+          "valueType": "string",
+          "readOnly": true
+        },
+        {
+          "component": "text",
+          "name": "name",
+          "label": "Field Name",
+          "description": "Unique identifier for this field (used in form submission)",
           "valueType": "string"
         },
         {
@@ -222,6 +250,14 @@
           "name": "fieldType",
           "value": "checkbox-group",
           "label": "Field Type",
+          "valueType": "string",
+          "readOnly": true
+        },
+        {
+          "component": "text",
+          "name": "name",
+          "label": "Field Name",
+          "description": "Unique identifier for this field group (used in form submission)",
           "valueType": "string"
         },
         {
@@ -252,7 +288,8 @@
           "name": "fieldType",
           "value": "submit",
           "label": "Field Type",
-          "valueType": "string"
+          "valueType": "string",
+          "readOnly": true
         },
         {
           "component": "text",

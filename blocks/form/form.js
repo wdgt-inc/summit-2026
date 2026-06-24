@@ -6,9 +6,10 @@ function createTextField(row) {
   moveInstrumentation(row, wrapper);
 
   const cells = [...row.children];
-  const label = cells[1]?.textContent?.trim() || '';
-  const placeholder = cells[2]?.textContent?.trim() || '';
-  const required = cells[3]?.textContent?.trim() === 'true';
+  const fieldName = cells[1]?.textContent?.trim() || '';
+  const label = cells[2]?.textContent?.trim() || '';
+  const placeholder = cells[3]?.textContent?.trim() || '';
+  const required = cells[4]?.textContent?.trim() === 'true';
 
   if (label) {
     const labelEl = document.createElement('label');
@@ -24,7 +25,7 @@ function createTextField(row) {
   input.className = 'form-input';
   if (placeholder) input.placeholder = placeholder;
   if (required) input.required = true;
-  if (label) input.name = label.toLowerCase().replace(/\s+/g, '-');
+  input.name = fieldName || label.toLowerCase().replace(/\s+/g, '-');
 
   wrapper.appendChild(input);
   return wrapper;
@@ -36,9 +37,10 @@ function createEmailField(row) {
   moveInstrumentation(row, wrapper);
 
   const cells = [...row.children];
-  const label = cells[1]?.textContent?.trim() || '';
-  const placeholder = cells[2]?.textContent?.trim() || '';
-  const required = cells[3]?.textContent?.trim() === 'true';
+  const fieldName = cells[1]?.textContent?.trim() || '';
+  const label = cells[2]?.textContent?.trim() || '';
+  const placeholder = cells[3]?.textContent?.trim() || '';
+  const required = cells[4]?.textContent?.trim() === 'true';
 
   if (label) {
     const labelEl = document.createElement('label');
@@ -54,7 +56,7 @@ function createEmailField(row) {
   input.className = 'form-input';
   if (placeholder) input.placeholder = placeholder;
   if (required) input.required = true;
-  if (label) input.name = label.toLowerCase().replace(/\s+/g, '-');
+  input.name = fieldName || label.toLowerCase().replace(/\s+/g, '-');
 
   wrapper.appendChild(input);
   return wrapper;
@@ -66,9 +68,10 @@ function createCheckboxField(row) {
   moveInstrumentation(row, wrapper);
 
   const cells = [...row.children];
-  const label = cells[1]?.textContent?.trim() || '';
-  const required = cells[2]?.textContent?.trim() === 'true';
-  const checked = cells[3]?.textContent?.trim() === 'true';
+  const fieldName = cells[1]?.textContent?.trim() || '';
+  const label = cells[2]?.textContent?.trim() || '';
+  const required = cells[3]?.textContent?.trim() === 'true';
+  const checked = cells[4]?.textContent?.trim() === 'true';
 
   const checkboxWrapper = document.createElement('div');
   checkboxWrapper.className = 'checkbox-wrapper';
@@ -78,7 +81,7 @@ function createCheckboxField(row) {
   input.className = 'form-checkbox';
   if (required) input.required = true;
   if (checked) input.checked = true;
-  if (label) input.name = label.toLowerCase().replace(/\s+/g, '-');
+  input.name = fieldName || label.toLowerCase().replace(/\s+/g, '-');
 
   const labelEl = document.createElement('label');
   labelEl.textContent = label;
@@ -97,9 +100,10 @@ function createCheckboxGroup(row) {
   moveInstrumentation(row, wrapper);
 
   const cells = [...row.children];
-  const label = cells[1]?.textContent?.trim() || '';
-  const optionsText = cells[2]?.textContent?.trim() || '';
-  const required = cells[3]?.textContent?.trim() === 'true';
+  const fieldName = cells[1]?.textContent?.trim() || '';
+  const label = cells[2]?.textContent?.trim() || '';
+  const optionsText = cells[3]?.textContent?.trim() || '';
+  const required = cells[4]?.textContent?.trim() === 'true';
 
   if (label) {
     const labelEl = document.createElement('label');
@@ -123,9 +127,10 @@ function createCheckboxGroup(row) {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.className = 'form-checkbox';
-    input.name = label ? `${label.toLowerCase().replace(/\s+/g, '-')}[]` : `checkbox-group-${index}`;
+    const baseName = fieldName || (label ? label.toLowerCase().replace(/\s+/g, '-') : 'checkbox-group');
+    input.name = `${baseName}[]`;
     input.value = option;
-    input.id = `${input.name}-${index}`;
+    input.id = `${baseName}-${index}`;
 
     const optionLabel = document.createElement('label');
     optionLabel.textContent = option;
