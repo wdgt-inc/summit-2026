@@ -17,7 +17,7 @@
   overflow: hidden;
 }
 
-/* ─── Track + slides ─────────────────────────────────────────────────────────── */
+/* ─── Track ──────────────────────────────────────────────────────────────────── */
 
 .hero-carousel-track {
   display: flex;
@@ -26,89 +26,16 @@
   will-change: transform;
 }
 
+/* ─── Slides ─────────────────────────────────────────────────────────────────── */
+
 .hero-carousel-slide {
   flex: 0 0 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
 }
 
-@media (width >= 900px) {
-  .hero-carousel-slide {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
-/* ─── Image ─────────────────────────────────────────────────────────────────── */
-
-.hero-carousel-image {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  border-radius: 4px;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-}
-
-@media (width >= 900px) {
-  .hero-carousel-slide .hero-carousel-image {
-    order: 2;
-  }
-}
-
-.hero-carousel-image picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-  line-height: 0;
-}
-
-.hero-carousel-image img {
-  display: block;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-
-/* ─── Text ───────────────────────────────────────────────────────────────────── */
-
-.hero-carousel-text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  order: -1;
-}
-
-.hero-carousel-text h1 {
-  color: var(--text-color);
-  font-size: var(--heading-font-size-xxl);
-  font-weight: 300;
-  line-height: 1.2;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.hero-carousel-text p {
-  color: var(--text-color);
-  font-size: var(--body-font-size-m);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.hero-carousel-text .button-container {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-
-.hero-carousel-text a.button:any-link {
-  margin: 0;
+/* The .hero block inside a slide should not re-apply container background/padding */
+.hero-carousel-slide .hero {
+  background: none;
 }
 
 /* ─── Prev / Next buttons ────────────────────────────────────────────────────── */

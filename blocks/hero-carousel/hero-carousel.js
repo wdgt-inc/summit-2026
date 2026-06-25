@@ -1,78 +1,26 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import decorateHero from '../hero/hero.js';
 
 /**
- * Builds a single slide element from a block item row.
- * A slide row contains grouped sub-rows: image, title, subtitle, then optional link rows.
- * @param {Element} item  The block item div (data-aue-type="component")
- * @returns {Element} A fully-built slide div
+ * Wraps each child item in a temporary hero block, runs the hero decorator on it,
+ * then returns the resulting hero element as a carousel slide.
+ * @param {Element} item  One child div of the hero-carousel block
+ * @returns {Element} A div.hero slide element
  */
 function buildSlide(item) {
-  const rows = [...item.children];
-  if (rows.length < 3) return null;
+  // Create a throw-away hero block with the same row structure as the item
+  const heroBlock = document.createElement('div');
+  heroBlock.className = 'hero block';
+  heroBlock.dataset.blockName = 'hero';
+  moveInstrumentation(item, heroBlock);
+  heroBlock.append(...item.childNodes);
 
-  const imageCell = rows[0].querySelector('div');
-  const titleCell = rows[1].querySelector('div');
-  const subtitleCell = rows[2].querySelector('div');
+  // Run the standard hero decorator — it calls replaceChildren internally
+  decorateHero(heroBlock);
 
   const slide = document.createElement('div');
   slide.className = 'hero-carousel-slide';
-  moveInstrumentation(item, slide);
-
-  const hasImage = imageCell && imageCell.querySelector('picture');
-  if (hasImage) {
-    const imageDiv = document.createElement('div');
-    imageDiv.className = 'hero-carousel-image';
-    imageDiv.append(...imageCell.childNodes);
-    slide.append(imageDiv);
-  }
-
-  const textDiv = document.createElement('div');
-  textDiv.className = 'hero-carousel-text';
-
-  const h1 = document.createElement('h1');
-  h1.textContent = titleCell.textContent.trim();
-  h1.setAttribute('data-aue-prop', 'title');
-  h1.setAttribute('data-aue-type', 'text');
-  moveInstrumentation(rows[1], h1);
-  textDiv.append(h1);
-
-  const subtitle = document.createElement('p');
-  subtitle.textContent = subtitleCell.textContent.trim();
-  subtitle.setAttribute('data-aue-prop', 'subtitle');
-  subtitle.setAttribute('data-aue-type', 'text');
-  moveInstrumentation(rows[2], subtitle);
-  textDiv.append(subtitle);
-
-  if (rows.length > 3) {
-    const buttonContainer = document.createElement('p');
-    buttonContainer.className = 'button-container';
-    rows.slice(3).forEach((row) => {
-      const cells = row.querySelectorAll(':scope > div');
-      const link = row.querySelector('a');
-      if (link) {
-        moveInstrumentation(row, link);
-        link.classList.add('button');
-        const iconCell = cells[1];
-        if (iconCell) {
-          const iconName = iconCell.textContent.trim();
-          if (iconName) {
-            const iconSpan = document.createElement('span');
-            iconSpan.className = `icon icon-${iconName}`;
-            const img = document.createElement('img');
-            img.src = `/icons/${iconName}.svg`;
-            img.alt = '';
-            img.loading = 'lazy';
-            iconSpan.append(img);
-            link.append(iconSpan);
-          }
-        }
-        buttonContainer.append(link);
-      }
-    });
-    textDiv.append(buttonContainer);
-  }
-
-  slide.append(textDiv);
+  slide.append(heroBlock);
   return slide;
 }
 
@@ -80,12 +28,11 @@ export default function decorate(block) {
   const items = [...block.children];
   if (!items.length) return;
 
-  // Build track containing all slides
+  const slides = items.map(buildSlide);
+
+  // Track
   const track = document.createElement('div');
   track.className = 'hero-carousel-track';
-
-  const slides = items.map(buildSlide).filter(Boolean);
-  if (!slides.length) return;
   slides.forEach((slide) => track.append(slide));
 
   // Prev / Next buttons
