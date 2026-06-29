@@ -94,7 +94,7 @@ export default function decorate(block) {
   // Group hero-link rows with the preceding hero slide row
   const grouped = [];
   allItems.forEach((item) => {
-    const isLink = item.querySelector(':scope > div > a, :scope > div > strong > a, :scope > div > em > a');
+    const isLink = item.querySelector('a');
     if (isLink && grouped.length) {
       grouped[grouped.length - 1].links.push(item);
     } else {
