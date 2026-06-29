@@ -14,69 +14,14 @@
           }
         }
       }
-    },
-    {
-      "title": "Hero Carousel Slide",
-      "id": "hero-carousel-slide",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Hero Carousel Slide",
-              "model": "hero-carousel-slide",
-              "filter": "hero-carousel-slide",
-              "title": "New Slide",
-              "subtitle": "Slide subtitle"
-            }
-          }
-        }
-      }
     }
   ],
-  "models": [
-    {
-      "id": "hero-carousel-slide",
-      "fields": [
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "image",
-          "label": "Image",
-          "multi": false
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "imageAlt",
-          "label": "Alt"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "title",
-          "label": "Title"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "subtitle",
-          "label": "Subtitle"
-        }
-      ]
-    }
-  ],
+  "models": [],
   "filters": [
     {
       "id": "hero-carousel",
       "components": [
-        "hero-carousel-slide"
-      ]
-    },
-    {
-      "id": "hero-carousel-slide",
-      "components": [
-        "hero-link"
+        "hero"
       ]
     }
   ]
