@@ -1,13 +1,12 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
- * Builds a single slide from a carousel item row.
- * The pipeline renders hero children as flat item rows: each item's direct children
- * are the hero cells — image, title, subtitle — followed by optional link rows.
- * @param {Element} item  One child div of the hero-carousel block (excluding the name row)
+ * Builds a single slide from a carousel item row and its associated link rows.
+ * @param {Element} item   The hero slide row
+ * @param {Element[]} links  Sibling hero-link rows that belong to this slide
  * @returns {Element|null} A div.hero-carousel-slide containing a decorated hero div
  */
-function buildSlide(item) {
+function buildSlide(item, links) {
   const rows = [...item.children];
   if (rows.length < 3) return null;
 
@@ -19,12 +18,11 @@ function buildSlide(item) {
   const heroBlock = document.createElement('div');
   heroBlock.className = 'hero block';
 
-  // Move the UE instrumentation from the item onto the hero block,
-  // then override the type to "container" so the UE Add button appears.
+  // Move UE instrumentation from the item; override type so Add button appears
   moveInstrumentation(item, heroBlock);
   heroBlock.setAttribute('data-aue-type', 'container');
   heroBlock.setAttribute('data-aue-behavior', 'component');
-  heroBlock.setAttribute('data-aue-filter', 'hero');
+  heroBlock.setAttribute('data-aue-filter', 'hero-carousel');
 
   const hasImage = imageCell.querySelector('picture');
   const imageDiv = document.createElement('div');
@@ -48,15 +46,15 @@ function buildSlide(item) {
   moveInstrumentation(rows[2], subtitle);
   textDiv.append(subtitle);
 
-  // rows[3+] are hero-link rows, each with two cells: link and icon name
-  if (rows.length > 3) {
+  // Render the sibling hero-link rows as buttons
+  if (links.length) {
     const buttonContainer = document.createElement('p');
     buttonContainer.className = 'button-container';
-    rows.slice(3).forEach((row) => {
-      const cells = row.querySelectorAll(':scope > div');
-      const link = row.querySelector('a');
+    links.forEach((linkRow) => {
+      const cells = linkRow.querySelectorAll(':scope > div');
+      const link = linkRow.querySelector('a');
       if (link) {
-        moveInstrumentation(row, link);
+        moveInstrumentation(linkRow, link);
         link.classList.add('button');
         const iconName = cells[1]?.textContent.trim();
         if (iconName) {
@@ -90,10 +88,21 @@ function buildSlide(item) {
 export default function decorate(block) {
   // Skip any name row — identified as a row whose cells are all empty
   const isNameRow = (el) => [...el.querySelectorAll(':scope > div')].every((c) => !c.textContent.trim() && !c.querySelector('picture'));
-  const items = [...block.children].filter((item) => !isNameRow(item));
-  if (!items.length) return;
+  const allItems = [...block.children].filter((item) => !isNameRow(item));
+  if (!allItems.length) return;
 
-  const slides = items.map(buildSlide).filter(Boolean);
+  // Group hero-link rows with the preceding hero slide row
+  const grouped = [];
+  allItems.forEach((item) => {
+    const isLink = item.querySelector(':scope > div > a, :scope > div > strong > a, :scope > div > em > a');
+    if (isLink && grouped.length) {
+      grouped[grouped.length - 1].links.push(item);
+    } else {
+      grouped.push({ slide: item, links: [] });
+    }
+  });
+
+  const slides = grouped.map(({ slide, links }) => buildSlide(slide, links)).filter(Boolean);
   if (!slides.length) return;
 
   // Clip: overflow:hidden, static — never moves
