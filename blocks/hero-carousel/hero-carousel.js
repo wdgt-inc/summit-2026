@@ -88,8 +88,9 @@ function buildSlide(item) {
 }
 
 export default function decorate(block) {
-  // First child is the block name row — skip it, slide rows start at index 1
-  const items = [...block.children].slice(1);
+  // Skip any name row — identified as a row whose cells are all empty
+  const isNameRow = (el) => [...el.querySelectorAll(':scope > div')].every((c) => !c.textContent.trim() && !c.querySelector('picture'));
+  const items = [...block.children].filter((item) => !isNameRow(item));
   if (!items.length) return;
 
   const slides = items.map(buildSlide).filter(Boolean);
