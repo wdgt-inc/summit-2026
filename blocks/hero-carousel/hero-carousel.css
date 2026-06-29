@@ -1,4 +1,4 @@
-/* ─── Container ─────────────────────────────────────────────────────────────── */
+/* ─── Container / wrapper ────────────────────────────────────────────────────── */
 
 .hero-carousel-container {
   background-color: var(--light-color);
@@ -14,26 +14,31 @@
 
 .hero-carousel {
   position: relative;
-  overflow: hidden;
+  margin: 0 -32px; /* pull to wrapper edges so buttons live in the gutter */
 }
 
-/* ─── Track ──────────────────────────────────────────────────────────────────── */
+/* ─── Clip is inset back to the original content width ──────────────────────── */
 
-.hero-carousel-track {
+.hero-carousel-clip {
+  overflow: hidden;
+  margin: 0 40px; /* leaves 40px each side for the nav buttons */
+}
+
+.hero-carousel-viewport {
   display: flex;
-  padding: 0 52px;
   transition: transform 0.4s ease;
   will-change: transform;
 }
 
-/* ─── Slides ─────────────────────────────────────────────────────────────────── */
+/* ─── Individual slides ──────────────────────────────────────────────────────── */
 
 .hero-carousel-slide {
+  /* Each slide occupies exactly the viewport width and never shrinks */
   flex: 0 0 100%;
-  width: 100%;
+  min-width: 100%;
 }
 
-/* The .hero block inside a slide should not re-apply container background/padding */
+/* Prevent the nested hero from inheriting the section-level background */
 .hero-carousel-slide .hero {
   background: none;
 }
