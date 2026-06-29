@@ -18,6 +18,10 @@ function buildSlide(item) {
   const heroBlock = document.createElement('div');
   heroBlock.className = 'hero block';
   moveInstrumentation(item, heroBlock);
+  // Make the UE treat this as a container so the Add button appears
+  heroBlock.setAttribute('data-aue-type', 'container');
+  heroBlock.setAttribute('data-aue-behavior', 'component');
+  heroBlock.setAttribute('data-aue-filter', 'hero-carousel-slide');
 
   const hasImage = imageCell.querySelector('picture');
   const imageDiv = document.createElement('div');

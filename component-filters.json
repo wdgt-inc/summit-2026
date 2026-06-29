@@ -56,7 +56,12 @@
   {
     "id": "hero-carousel",
     "components": [
-      "hero",
+      "hero-carousel-slide"
+    ]
+  },
+  {
+    "id": "hero-carousel-slide",
+    "components": [
       "hero-link"
     ]
   },
