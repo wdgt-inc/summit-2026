@@ -1,21 +1,85 @@
-import decorateHero from '../hero/hero.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
- * Builds a single slide from a nested hero block.
- * Each carousel child item is a wrapper div containing a div.hero with its own rows.
- * @param {Element} item  One child div of the hero-carousel block (a hero wrapper)
- * @returns {Element|null} A div.hero-carousel-slide containing the decorated hero
+ * Builds a single slide from a carousel item row.
+ * The pipeline renders hero children as flat item rows: each item's direct children
+ * are the hero cells — image, title, subtitle — followed by optional link rows.
+ * @param {Element} item  One child div of the hero-carousel block (excluding the name row)
+ * @returns {Element|null} A div.hero-carousel-slide containing a decorated hero div
  */
 function buildSlide(item) {
-  const heroBlock = item.querySelector(':scope > .hero');
-  if (!heroBlock) return null;
+  const rows = [...item.children];
+  if (rows.length < 3) return null;
 
-  // The hero block already has its UE instrumentation from the pipeline.
-  // Ensure the UE sees it as a container so the Add button appears for hero-links.
+  // Each row is: div > div(cell). Grab the inner cell for image/title/subtitle rows.
+  const imageCell = rows[0].querySelector(':scope > div') || rows[0];
+  const titleCell = rows[1].querySelector(':scope > div') || rows[1];
+  const subtitleCell = rows[2].querySelector(':scope > div') || rows[2];
+
+  const heroBlock = document.createElement('div');
+  heroBlock.className = 'hero block';
+
+  // Move the UE instrumentation from the item onto the hero block,
+  // then override the type to "container" so the UE Add button appears.
+  moveInstrumentation(item, heroBlock);
   heroBlock.setAttribute('data-aue-type', 'container');
   heroBlock.setAttribute('data-aue-behavior', 'component');
+  heroBlock.setAttribute('data-aue-filter', 'hero');
 
-  decorateHero(heroBlock);
+  const hasImage = imageCell.querySelector('picture');
+  const imageDiv = document.createElement('div');
+  if (hasImage) {
+    imageDiv.append(...imageCell.childNodes);
+  }
+
+  const textDiv = document.createElement('div');
+
+  const h1 = document.createElement('h1');
+  h1.textContent = titleCell.textContent.trim();
+  h1.setAttribute('data-aue-prop', 'title');
+  h1.setAttribute('data-aue-type', 'text');
+  moveInstrumentation(rows[1], h1);
+  textDiv.append(h1);
+
+  const subtitle = document.createElement('p');
+  subtitle.textContent = subtitleCell.textContent.trim();
+  subtitle.setAttribute('data-aue-prop', 'subtitle');
+  subtitle.setAttribute('data-aue-type', 'text');
+  moveInstrumentation(rows[2], subtitle);
+  textDiv.append(subtitle);
+
+  // rows[3+] are hero-link rows, each with two cells: link and icon name
+  if (rows.length > 3) {
+    const buttonContainer = document.createElement('p');
+    buttonContainer.className = 'button-container';
+    rows.slice(3).forEach((row) => {
+      const cells = row.querySelectorAll(':scope > div');
+      const link = row.querySelector('a');
+      if (link) {
+        moveInstrumentation(row, link);
+        link.classList.add('button');
+        const iconName = cells[1]?.textContent.trim();
+        if (iconName) {
+          const iconSpan = document.createElement('span');
+          iconSpan.className = `icon icon-${iconName}`;
+          const img = document.createElement('img');
+          img.src = `/icons/${iconName}.svg`;
+          img.alt = '';
+          img.loading = 'lazy';
+          iconSpan.append(img);
+          link.append(iconSpan);
+        }
+        buttonContainer.append(link);
+      }
+    });
+    textDiv.append(buttonContainer);
+  }
+
+  if (hasImage) {
+    heroBlock.replaceChildren(imageDiv, textDiv);
+  } else {
+    heroBlock.replaceChildren(textDiv);
+  }
 
   const slide = document.createElement('div');
   slide.className = 'hero-carousel-slide';
@@ -24,7 +88,7 @@ function buildSlide(item) {
 }
 
 export default function decorate(block) {
-  // First child is the block name row — skip it, hero wrappers start at index 1
+  // First child is the block name row — skip it, slide rows start at index 1
   const items = [...block.children].slice(1);
   if (!items.length) return;
 
