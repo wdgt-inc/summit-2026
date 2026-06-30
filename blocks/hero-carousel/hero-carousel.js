@@ -13,8 +13,9 @@ function buildSlide(item) {
   const picture = cells[0].querySelector('picture');
   const title = cells[1].textContent.trim();
   const subtitle = cells[2].textContent.trim();
-  const linkHref = cells[3]?.querySelector('a')?.href || cells[3]?.textContent.trim();
-  const linkText = cells[4]?.textContent.trim();
+  const linkAnchor = cells[3]?.querySelector('a');
+  const linkHref = linkAnchor?.href || cells[3]?.textContent.trim();
+  const linkText = linkAnchor?.textContent.trim() || cells[4]?.textContent.trim();
 
   const slide = document.createElement('div');
   slide.className = 'hero-carousel-slide';
