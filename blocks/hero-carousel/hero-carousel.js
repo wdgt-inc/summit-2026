@@ -77,10 +77,10 @@ export default function decorate(block) {
   const slides = items.map(buildSlide).filter(Boolean);
   if (!slides.length) return;
 
-  // Read block-level config from the first row (name, autoTransition, transitionInterval)
+  // Read block-level config from the first row (autoTransition, transitionInterval)
   const configCells = [...(block.children[0]?.children ?? [])];
-  const autoTransition = configCells[1]?.textContent.trim() === 'true';
-  const transitionInterval = parseInt(configCells[2]?.textContent.trim(), 10) || 5;
+  const autoTransition = configCells[0]?.textContent.trim() === 'true';
+  const transitionInterval = parseInt(configCells[1]?.textContent.trim(), 10) || 5;
 
   // Clip: static overflow:hidden window
   const clip = document.createElement('div');
