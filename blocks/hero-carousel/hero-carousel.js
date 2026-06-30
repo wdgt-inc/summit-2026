@@ -30,12 +30,15 @@ function buildSlide(item) {
   const overlay = document.createElement('div');
   overlay.className = 'hero-carousel-slide-overlay';
 
+  const textWrap = document.createElement('div');
+  textWrap.className = 'hero-carousel-slide-overlay-text';
+
   const h2 = document.createElement('h2');
   h2.textContent = title;
   h2.setAttribute('data-aue-prop', 'title');
   h2.setAttribute('data-aue-type', 'text');
   moveInstrumentation(cells[1], h2);
-  overlay.append(h2);
+  textWrap.append(h2);
 
   if (subtitle) {
     const p = document.createElement('p');
@@ -43,19 +46,21 @@ function buildSlide(item) {
     p.setAttribute('data-aue-prop', 'subtitle');
     p.setAttribute('data-aue-type', 'text');
     moveInstrumentation(cells[2], p);
-    overlay.append(p);
+    textWrap.append(p);
   }
 
+  overlay.append(textWrap);
+
   if (linkHref && linkText) {
-    const btnWrap = document.createElement('p');
-    btnWrap.className = 'button-container';
+    const cta = document.createElement('div');
+    cta.className = 'hero-carousel-slide-overlay-cta';
     const a = document.createElement('a');
     a.href = linkHref;
     a.textContent = linkText;
     a.className = 'button primary';
     moveInstrumentation(cells[3], a);
-    btnWrap.append(a);
-    overlay.append(btnWrap);
+    cta.append(a);
+    overlay.append(cta);
   }
 
   slide.append(overlay);
