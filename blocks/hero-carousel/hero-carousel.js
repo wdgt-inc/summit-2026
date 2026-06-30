@@ -69,13 +69,18 @@ function buildSlide(item) {
 }
 
 export default function decorate(block) {
-  // Skip the block name row (all cells empty / no content)
+  // Skip the config/name row; slides are the remaining rows
   const isNameRow = (el) => [...el.children].every((c) => !c.textContent.trim() && !c.querySelector('picture'));
   const items = [...block.children].filter((item) => !isNameRow(item));
   if (!items.length) return;
 
   const slides = items.map(buildSlide).filter(Boolean);
   if (!slides.length) return;
+
+  // Read block-level config from the first row (name, autoTransition, transitionInterval)
+  const configCells = [...(block.children[0]?.children ?? [])];
+  const autoTransition = configCells[1]?.textContent.trim() === 'true';
+  const transitionInterval = parseInt(configCells[2]?.textContent.trim(), 10) || 5;
 
   // Clip: static overflow:hidden window
   const clip = document.createElement('div');
@@ -122,6 +127,10 @@ export default function decorate(block) {
 
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  if (autoTransition && slides.length > 1) {
+    setInterval(() => goTo(current + 1), transitionInterval * 1000);
+  }
 
   block.replaceChildren(prevBtn, clip, nextBtn, dots);
 }

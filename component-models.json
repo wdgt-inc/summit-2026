@@ -531,6 +531,24 @@
     ]
   },
   {
+    "id": "hero-carousel",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "autoTransition",
+        "label": "Auto transition",
+        "value": false
+      },
+      {
+        "component": "number",
+        "valueType": "number",
+        "name": "transitionInterval",
+        "label": "Transition interval (seconds)",
+        "value": 5
+      }
+    ]
+  },
+  {
     "id": "hero-carousel-slide",
     "fields": [
       {
