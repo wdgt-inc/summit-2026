@@ -2,12 +2,14 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
 }
 
 .cards > ul > li {
+  flex: 0 1 257px;
   border: 1px solid var(--border-color);
   background-color: var(--background-color);
 }
