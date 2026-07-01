@@ -276,6 +276,42 @@
           }
         },
         {
+          "title": "Hero Carousel",
+          "id": "hero-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Hero Carousel",
+                  "model": "hero-carousel",
+                  "filter": "hero-carousel",
+                  "autoTransition": false,
+                  "transitionInterval": 5
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hero Carousel Slide",
+          "id": "hero-carousel-slide",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Hero Carousel Slide",
+                  "model": "hero-carousel-slide",
+                  "title": "Slide title",
+                  "subtitle": "Slide subtitle",
+                  "linkText": "Learn more"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {

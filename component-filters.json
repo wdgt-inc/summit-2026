@@ -17,7 +17,8 @@
       "columns",
       "fragment",
       "form",
-      "table"
+      "table",
+      "hero-carousel"
     ]
   },
   {
@@ -50,6 +51,12 @@
       "form-checkbox-group",
       "form-hidden-field",
       "form-submit-button"
+    ]
+  },
+  {
+    "id": "hero-carousel",
+    "components": [
+      "hero-carousel-slide"
     ]
   },
   {

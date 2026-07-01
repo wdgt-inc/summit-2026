@@ -64,7 +64,8 @@
         "columns",
         "fragment",
         "form",
-        "table"
+        "table",
+        "hero-carousel"
       ]
     }
   ]
