@@ -56,8 +56,10 @@ async function fetchAssets({ authorHost, apiKey, bearerToken, aemPath }) {
     body.query = [
       ...SEARCH_BODY.query,
       {
-        startsWith: {
-          'repositoryMetadata.repo:path': aemPath,
+        match: {
+          text: aemPath,
+          fields: ['repositoryMetadata.repo:path'],
+          operator: 'startsWith',
         },
       },
     ];

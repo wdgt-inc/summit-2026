@@ -46,11 +46,10 @@
           "label": "Bearer Token"
         },
         {
-          "component": "text",
-          "valueType": "string",
+          "component": "aem-content",
           "name": "aemPath",
           "label": "AEM Path",
-          "description": "Optional DAM path prefix to filter results, e.g. /content/dam/summit-2026/team"
+          "description": "Optional DAM folder to filter results"
         }
       ]
     }
