@@ -393,30 +393,35 @@
 }
 
 .asset-drawer-download {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  padding: 0 1rem;
-  margin: 0;
-  gap: 0;
-  background-color: var(--blue-primary, #0f62fe);
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0.75rem 1rem !important;
+  margin: 0 !important;
+  gap: 0 !important;
+  max-width: none !important;
+  background-color: var(--blue-primary, #0f62fe) !important;
   color: #fff !important;
   font-family: var(--body-font-family, sans-serif);
   font-size: var(--body-font-size-xs, 14px);
-  border: none;
+  line-height: 1.29 !important;
+  border: none !important;
   border-radius: 0;
   cursor: pointer;
   white-space: nowrap;
   letter-spacing: 0.16px;
+  overflow: visible !important;
 }
 
 .asset-drawer-download:hover:not(:disabled) {
-  background-color: var(--link-hover-color, #0043ce);
+  background-color: var(--link-hover-color, #0043ce) !important;
 }
 
 .asset-drawer-download:disabled {
-  background-color: var(--dark-color, #525252);
+  background-color: var(--dark-color, #525252) !important;
   cursor: not-allowed;
 }
 
