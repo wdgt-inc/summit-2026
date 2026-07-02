@@ -180,6 +180,13 @@
         "valueType": "string",
         "name": "bearerToken",
         "label": "Bearer Token"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "aemPath",
+        "label": "AEM Path",
+        "description": "Optional DAM path prefix to filter results, e.g. /content/dam/summit-2026/team"
       }
     ]
   },

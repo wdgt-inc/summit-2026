@@ -31,7 +31,7 @@ const SEARCH_BODY = {
 };
 
 function getConfig(block) {
-  // Rows are positional: 0=title, 1=authorHost, 2=apiKey, 3=bearerToken
+  // Rows are positional: 0=title, 1=authorHost, 2=apiKey, 3=bearerToken, 4=aemPath
   const rows = [...block.children];
   const cell = (rowIndex) => rows[rowIndex]?.children[0]?.textContent?.trim() ?? '';
 
@@ -44,11 +44,25 @@ function getConfig(block) {
     publishHost,
     apiKey: cell(2),
     bearerToken: cell(3),
+    aemPath: cell(4),
   };
 }
 
-async function fetchAssets({ authorHost, apiKey, bearerToken }) {
+async function fetchAssets({ authorHost, apiKey, bearerToken, aemPath }) {
   const endpoint = `https://${authorHost}/adobe/assets/search`;
+
+  const body = { ...SEARCH_BODY };
+  if (aemPath) {
+    body.query = [
+      ...SEARCH_BODY.query,
+      {
+        startsWith: {
+          'repositoryMetadata.repo:path': aemPath,
+        },
+      },
+    ];
+  }
+
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
@@ -56,7 +70,7 @@ async function fetchAssets({ authorHost, apiKey, bearerToken }) {
       'x-api-key': apiKey,
       Authorization: `Bearer ${bearerToken}`,
     },
-    body: JSON.stringify(SEARCH_BODY),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
