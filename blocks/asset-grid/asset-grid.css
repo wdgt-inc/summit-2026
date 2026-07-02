@@ -200,6 +200,70 @@
   color: var(--text-color, #1f2328);
 }
 
+.asset-grid .asset-grid-empty {
+  color: var(--dark-color);
+  font-size: var(--body-font-size-xs);
+  margin: 0;
+}
+
+/* Search bar */
+.asset-grid .asset-grid-search-bar {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.asset-grid .asset-grid-search-input {
+  flex: 1;
+  height: 40px;
+  padding: 0 1rem;
+  border: none;
+  border-bottom: 1px solid var(--text-color);
+  background-color: var(--light-color);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  outline: none;
+}
+
+.asset-grid .asset-grid-search-input::placeholder {
+  color: var(--dark-color);
+}
+
+.asset-grid .asset-grid-search-input:focus {
+  outline: 2px solid var(--blue-primary);
+  outline-offset: 0;
+}
+
+.asset-grid .asset-grid-search-input:disabled {
+  opacity: 0.5;
+}
+
+.asset-grid .asset-grid-search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+  background-color: var(--blue-primary);
+  border: none;
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.asset-grid .asset-grid-search-btn:hover {
+  background-color: var(--link-hover-color);
+}
+
+.asset-grid .asset-grid-search-btn:disabled {
+  background-color: var(--dark-color);
+  cursor: not-allowed;
+}
+
 /* Pagination */
 .asset-grid .asset-grid-pagination {
   display: flex;
@@ -326,6 +390,34 @@
   font-size: 1rem;
   font-weight: 600;
   margin: 0;
+}
+
+.asset-drawer-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 1rem;
+  margin: 0;
+  gap: 0;
+  background-color: var(--blue-primary, #0f62fe);
+  color: #fff !important;
+  font-family: var(--body-font-family, sans-serif);
+  font-size: var(--body-font-size-xs, 14px);
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.16px;
+}
+
+.asset-drawer-download:hover:not(:disabled) {
+  background-color: var(--link-hover-color, #0043ce);
+}
+
+.asset-drawer-download:disabled {
+  background-color: var(--dark-color, #525252);
+  cursor: not-allowed;
 }
 
 .asset-drawer-description {

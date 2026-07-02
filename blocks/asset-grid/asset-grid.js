@@ -48,21 +48,26 @@ function getConfig(block) {
   };
 }
 
-async function fetchAssets({ authorHost, apiKey, bearerToken, aemPath }) {
+async function fetchAssets({ authorHost, apiKey, bearerToken, aemPath, searchText }) {
   const endpoint = `https://${authorHost}/adobe/assets/search`;
 
-  const body = { ...SEARCH_BODY };
+  const query = [...SEARCH_BODY.query];
+
   if (aemPath) {
     const ancestorUrn = `urn:aaid:aem:${aemPath.replace(/\//g, '*')}`;
-    body.query = [
-      ...SEARCH_BODY.query,
-      {
-        term: {
-          'repositoryMetadata.repo:ancestors': [ancestorUrn],
-        },
-      },
-    ];
+    query.push({ term: { 'repositoryMetadata.repo:ancestors': [ancestorUrn] } });
   }
+
+  if (searchText) {
+    query.push({
+      match: {
+        text: searchText,
+        mode: 'HYBRID',
+      },
+    });
+  }
+
+  const body = { ...SEARCH_BODY, query };
 
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -163,7 +168,33 @@ function buildDrawer() {
     h2.className = 'asset-drawer-title';
     h2.textContent = title;
 
-    content.append(img, h2);
+    const downloadUrl = `https://${publishHost}/adobe/dynamicmedia/deliver/dm-aid--${uuid}/${name}`;
+    const filename = item.repositoryMetadata['repo:name'] ?? 'asset';
+
+    const downloadBtn = document.createElement('button');
+    downloadBtn.className = 'asset-drawer-download';
+    downloadBtn.textContent = 'Download';
+    downloadBtn.addEventListener('click', async () => {
+      downloadBtn.textContent = 'Downloading…';
+      downloadBtn.disabled = true;
+      try {
+        const res = await fetch(downloadUrl);
+        const blob = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(blobUrl);
+      } catch {
+        downloadBtn.textContent = 'Download failed';
+        return;
+      }
+      downloadBtn.textContent = 'Download';
+      downloadBtn.disabled = false;
+    });
+
+    content.append(img, h2, downloadBtn);
 
     if (description) {
       const p = document.createElement('p');
@@ -302,10 +333,11 @@ export default async function decorate(block) {
 
   const PAGE_SIZE = 12;
 
-  // Mutable sort/page state
+  // Mutable state
   let sortKey = 'size';
   let sortAsc = false;
   let currentPage = 0;
+  let allItems = items; // updated after each search
 
   const grid = document.createElement('div');
   grid.className = 'asset-grid-inner';
@@ -315,13 +347,22 @@ export default async function decorate(block) {
 
   function renderGrid() {
     const option = SORT_OPTIONS.find((o) => o.key === sortKey);
-    const sorted = [...items].sort((a, b) => {
+    const sorted = [...allItems].sort((a, b) => {
       const av = option.getValue(a);
       const bv = option.getValue(b);
       if (av < bv) return sortAsc ? -1 : 1;
       if (av > bv) return sortAsc ? 1 : -1;
       return 0;
     });
+
+    if (sorted.length === 0) {
+      const msg = document.createElement('p');
+      msg.className = 'asset-grid-empty';
+      msg.textContent = 'No assets found.';
+      grid.replaceChildren(msg);
+      pagination.innerHTML = '';
+      return;
+    }
 
     const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
     // Clamp page in case sort reduced total
@@ -467,6 +508,46 @@ export default async function decorate(block) {
   sortControls.append(sortLabel, fieldDropdown, dirDropdown);
   sortBar.append(sortControls);
 
+  // Search bar
+  const searchBar = document.createElement('div');
+  searchBar.className = 'asset-grid-search-bar';
+
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.className = 'asset-grid-search-input';
+  searchInput.placeholder = 'Search assets…';
+  searchInput.setAttribute('aria-label', 'Search assets');
+
+  const searchBtn = document.createElement('button');
+  searchBtn.className = 'asset-grid-search-btn';
+  searchBtn.setAttribute('aria-label', 'Search');
+  searchBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M29 27.586l-7.552-7.552A11 11 0 1 0 19.433 22l7.553 7.552zM4 13a9 9 0 1 1 9 9 9.01 9.01 0 0 1-9-9z"/></svg>';
+
+  const doSearch = async () => {
+    const searchText = searchInput.value.trim();
+    searchBtn.disabled = true;
+    searchInput.disabled = true;
+    grid.textContent = 'Searching…';
+    pagination.innerHTML = '';
+    try {
+      const data = await fetchAssets({ ...config, searchText });
+      allItems = (data?.hits?.results ?? []).filter((item) => item.repositoryMetadata?.['aem:published']);
+    } catch (err) {
+      grid.textContent = `Error: ${err.message}`;
+      return;
+    } finally {
+      searchBtn.disabled = false;
+      searchInput.disabled = false;
+    }
+    currentPage = 0;
+    renderGrid();
+  };
+
+  searchBtn.addEventListener('click', doSearch);
+  searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(); });
+
+  searchBar.append(searchInput, searchBtn);
+
   renderGrid();
 
   const children = [];
@@ -485,6 +566,6 @@ export default async function decorate(block) {
   }
   toolbar.append(pathEl, sortBar);
 
-  children.push(toolbar, grid, pagination);
+  children.push(toolbar, searchBar, grid, pagination);
   block.replaceChildren(...children);
 }
