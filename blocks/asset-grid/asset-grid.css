@@ -1,29 +1,126 @@
+.asset-grid .asset-grid-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.asset-grid .asset-grid-path {
+  font-size: 0.8rem;
+  color: #57606a;
+  font-family: monospace;
+  margin: 0;
+}
+
+.asset-grid .asset-grid-path-label {
+  font-family: var(--body-font-family, sans-serif);
+  font-weight: 600;
+  color: #1f2328;
+  margin-right: 0.25rem;
+}
+
 .asset-grid .asset-grid-sort-bar {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: flex-end;
   flex-wrap: wrap;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
+}
+
+.asset-grid .asset-grid-sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .asset-grid .asset-grid-sort-label {
-  font-size: 0.85rem;
-  color: #57606a;
+  font-size: var(--body-font-size-xs);
+  color: var(--dark-color);
 }
 
-.asset-grid .asset-grid-sort-select {
-  font-size: 0.85rem;
-  padding: 0.3rem 0.6rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  background: #fff;
-  color: #1f2328;
+/* Custom select */
+.asset-grid .asset-grid-custom-select {
+  position: relative;
+  min-width: 130px;
+}
+
+.asset-grid .asset-grid-custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 1rem;
+  background-color: var(--light-color);
+  border: none;
+  border-bottom: 1px solid var(--text-color);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  cursor: pointer;
+  user-select: none;
+  gap: 0.5rem;
+}
+
+.asset-grid .asset-grid-custom-select-trigger:hover {
+  background-color: #e8e8e8;
+}
+
+.asset-grid .asset-grid-custom-select:focus,
+.asset-grid .asset-grid-custom-select.is-open .asset-grid-custom-select-trigger {
+  outline: 2px solid var(--blue-primary);
+  outline-offset: 0;
+}
+
+.asset-grid .asset-grid-custom-select-chevron {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--text-color);
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+
+.asset-grid .asset-grid-custom-select.is-open .asset-grid-custom-select-chevron {
+  transform: rotate(180deg);
+}
+
+.asset-grid .asset-grid-custom-select-listbox {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 12%);
+}
+
+.asset-grid .asset-grid-custom-select.is-open .asset-grid-custom-select-listbox {
+  display: block;
+}
+
+.asset-grid .asset-grid-custom-select-option {
+  padding: 0.65rem 1rem;
+  font-size: var(--body-font-size-xs);
+  font-family: var(--body-font-family);
+  color: var(--text-color);
   cursor: pointer;
 }
 
-.asset-grid .asset-grid-sort-select:focus {
-  outline: 2px solid #3b82d4;
-  outline-offset: 1px;
+.asset-grid .asset-grid-custom-select-option:hover {
+  background-color: var(--light-color);
+}
+
+.asset-grid .asset-grid-custom-select-option.is-selected {
+  background-color: var(--blue-primary);
+  color: #fff;
 }
 
 .asset-grid .asset-grid-inner {
@@ -101,6 +198,57 @@
 .asset-grid .asset-card-meta-label {
   font-weight: 600;
   color: var(--text-color, #1f2328);
+}
+
+/* Pagination */
+.asset-grid .asset-grid-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: 2rem;
+}
+
+.asset-grid .asset-grid-page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--light-color);
+  border: none;
+  border-bottom: 1px solid var(--text-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  gap: 0;
+}
+
+.asset-grid .asset-grid-page-btn:hover:not(:disabled) {
+  background: #e8e8e8;
+}
+
+.asset-grid .asset-grid-page-btn:disabled {
+  color: #c6c6c6;
+  border-bottom-color: #c6c6c6;
+  cursor: not-allowed;
+  background: var(--light-color);
+}
+
+.asset-grid .asset-grid-page-info {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 1.25rem;
+  background: var(--background-color);
+  border-bottom: 1px solid var(--text-color);
+  font-size: var(--body-font-size-xs);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  white-space: nowrap;
 }
 
 .asset-grid .asset-card {

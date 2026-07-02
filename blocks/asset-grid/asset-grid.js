@@ -53,13 +53,12 @@ async function fetchAssets({ authorHost, apiKey, bearerToken, aemPath }) {
 
   const body = { ...SEARCH_BODY };
   if (aemPath) {
+    const ancestorUrn = `urn:aaid:aem:${aemPath.replace(/\//g, '*')}`;
     body.query = [
       ...SEARCH_BODY.query,
       {
-        match: {
-          text: aemPath,
-          fields: ['repositoryMetadata.repo:path'],
-          operator: 'startsWith',
+        term: {
+          'repositoryMetadata.repo:ancestors': [ancestorUrn],
         },
       },
     ];
@@ -301,12 +300,18 @@ export default async function decorate(block) {
   const drawer = buildDrawer();
   document.body.append(drawer);
 
-  // Mutable sort state
+  const PAGE_SIZE = 12;
+
+  // Mutable sort/page state
   let sortKey = 'size';
   let sortAsc = false;
+  let currentPage = 0;
 
   const grid = document.createElement('div');
   grid.className = 'asset-grid-inner';
+
+  const pagination = document.createElement('div');
+  pagination.className = 'asset-grid-pagination';
 
   function renderGrid() {
     const option = SORT_OPTIONS.find((o) => o.key === sortKey);
@@ -317,50 +322,150 @@ export default async function decorate(block) {
       if (av > bv) return sortAsc ? 1 : -1;
       return 0;
     });
-    grid.replaceChildren(...sorted.map((item) => buildCard(item, config.publishHost, drawer)));
+
+    const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+    // Clamp page in case sort reduced total
+    if (currentPage >= totalPages) currentPage = Math.max(0, totalPages - 1);
+
+    const pageItems = sorted.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
+    grid.replaceChildren(...pageItems.map((item) => buildCard(item, config.publishHost, drawer)));
+
+    // Pagination controls
+    pagination.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'asset-grid-page-btn';
+    prevBtn.textContent = '←';
+    prevBtn.setAttribute('aria-label', 'Previous page');
+    prevBtn.disabled = currentPage === 0;
+    prevBtn.addEventListener('click', () => { currentPage -= 1; renderGrid(); });
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'asset-grid-page-btn';
+    nextBtn.textContent = '→';
+    nextBtn.setAttribute('aria-label', 'Next page');
+    nextBtn.disabled = currentPage === totalPages - 1;
+    nextBtn.addEventListener('click', () => { currentPage += 1; renderGrid(); });
+
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'asset-grid-page-info';
+    pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
+
+    pagination.append(prevBtn, pageInfo, nextBtn);
+  }
+
+  // Custom dropdown helper — fully styled, keyboard accessible
+  function buildCustomSelect(options, selectedValue, ariaLabel, onChangeFn) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'asset-grid-custom-select';
+    wrapper.setAttribute('role', 'combobox');
+    wrapper.setAttribute('aria-haspopup', 'listbox');
+    wrapper.setAttribute('aria-expanded', 'false');
+    wrapper.setAttribute('aria-label', ariaLabel);
+    wrapper.setAttribute('tabindex', '0');
+
+    const trigger = document.createElement('div');
+    trigger.className = 'asset-grid-custom-select-trigger';
+
+    const triggerText = document.createElement('span');
+    const currentOption = options.find(([, v]) => v === selectedValue) ?? options[0];
+    triggerText.textContent = currentOption[0];
+    trigger.append(triggerText);
+
+    const chevron = document.createElement('span');
+    chevron.className = 'asset-grid-custom-select-chevron';
+    chevron.setAttribute('aria-hidden', 'true');
+    trigger.append(chevron);
+
+    const listbox = document.createElement('ul');
+    listbox.className = 'asset-grid-custom-select-listbox';
+    listbox.setAttribute('role', 'listbox');
+
+    let currentValue = selectedValue ?? options[0][1];
+
+    options.forEach(([label, value]) => {
+      const item = document.createElement('li');
+      item.className = 'asset-grid-custom-select-option';
+      item.setAttribute('role', 'option');
+      item.setAttribute('data-value', value);
+      item.setAttribute('aria-selected', String(value === currentValue));
+      item.textContent = label;
+      if (value === currentValue) item.classList.add('is-selected');
+
+      item.addEventListener('click', () => {
+        if (value === currentValue) { close(); return; }
+        currentValue = value;
+        triggerText.textContent = label;
+        listbox.querySelectorAll('.asset-grid-custom-select-option').forEach((o) => {
+          const sel = o.dataset.value === currentValue;
+          o.setAttribute('aria-selected', String(sel));
+          o.classList.toggle('is-selected', sel);
+        });
+        close();
+        onChangeFn(currentValue);
+      });
+
+      listbox.append(item);
+    });
+
+    wrapper.append(trigger, listbox);
+
+    const open = () => {
+      wrapper.classList.add('is-open');
+      wrapper.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      wrapper.classList.remove('is-open');
+      wrapper.setAttribute('aria-expanded', 'false');
+    };
+
+    trigger.addEventListener('click', () => (wrapper.classList.contains('is-open') ? close() : open()));
+    wrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); wrapper.classList.contains('is-open') ? close() : open(); }
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const items = [...listbox.querySelectorAll('.asset-grid-custom-select-option')];
+        const idx = items.findIndex((o) => o.dataset.value === currentValue);
+        const next = e.key === 'ArrowDown' ? items[idx + 1] : items[idx - 1];
+        if (next) next.click();
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => { if (!wrapper.contains(e.target)) close(); }, true);
+
+    wrapper.getValue = () => currentValue;
+    return wrapper;
   }
 
   // Sort bar
   const sortBar = document.createElement('div');
   sortBar.className = 'asset-grid-sort-bar';
 
-  const sortLabel = document.createElement('label');
+  const sortLabel = document.createElement('span');
   sortLabel.className = 'asset-grid-sort-label';
   sortLabel.textContent = 'Sort by:';
-  sortLabel.setAttribute('for', 'asset-grid-sort-field');
 
-  const fieldSelect = document.createElement('select');
-  fieldSelect.className = 'asset-grid-sort-select';
-  fieldSelect.id = 'asset-grid-sort-field';
-  SORT_OPTIONS.forEach(({ key, label }) => {
-    const opt = document.createElement('option');
-    opt.value = key;
-    opt.textContent = label;
-    opt.selected = key === sortKey;
-    fieldSelect.append(opt);
-  });
+  const fieldDropdown = buildCustomSelect(
+    SORT_OPTIONS.map(({ key, label }) => [label, key]),
+    sortKey,
+    'Sort field',
+    (value) => { sortKey = value; currentPage = 0; renderGrid(); },
+  );
 
-  const dirSelect = document.createElement('select');
-  dirSelect.className = 'asset-grid-sort-select';
-  dirSelect.setAttribute('aria-label', 'Sort direction');
-  [['Descending', 'false'], ['Ascending', 'true']].forEach(([label, value]) => {
-    const opt = document.createElement('option');
-    opt.value = value;
-    opt.textContent = label;
-    opt.selected = value === String(sortAsc);
-    dirSelect.append(opt);
-  });
+  const dirDropdown = buildCustomSelect(
+    [['Descending', 'false'], ['Ascending', 'true']],
+    String(sortAsc),
+    'Sort direction',
+    (value) => { sortAsc = value === 'true'; currentPage = 0; renderGrid(); },
+  );
 
-  const onChange = () => {
-    sortKey = fieldSelect.value;
-    sortAsc = dirSelect.value === 'true';
-    renderGrid();
-  };
-
-  fieldSelect.addEventListener('change', onChange);
-  dirSelect.addEventListener('change', onChange);
-
-  sortBar.append(sortLabel, fieldSelect, dirSelect);
+  const sortControls = document.createElement('div');
+  sortControls.className = 'asset-grid-sort-controls';
+  sortControls.append(sortLabel, fieldDropdown, dirDropdown);
+  sortBar.append(sortControls);
 
   renderGrid();
 
@@ -370,6 +475,16 @@ export default async function decorate(block) {
     h2.textContent = config.title;
     children.push(h2);
   }
-  children.push(sortBar, grid);
+  const toolbar = document.createElement('div');
+  toolbar.className = 'asset-grid-toolbar';
+
+  const pathEl = document.createElement('p');
+  pathEl.className = 'asset-grid-path';
+  if (config.aemPath) {
+    pathEl.innerHTML = `<span class="asset-grid-path-label">DAM Path</span> ${config.aemPath}`;
+  }
+  toolbar.append(pathEl, sortBar);
+
+  children.push(toolbar, grid, pagination);
   block.replaceChildren(...children);
 }
