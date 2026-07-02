@@ -31,7 +31,7 @@ const SEARCH_BODY = {
 };
 
 function getConfig(block) {
-  // Rows are positional: 0=title, 1=authorHost, 2=apiKey, 3=bearerToken
+  // Rows are positional: 0=title, 1=authorHost, 2=apiKey, 3=bearerToken, 4=aemPath
   const rows = [...block.children];
   const cell = (rowIndex) => rows[rowIndex]?.children[0]?.textContent?.trim() ?? '';
 
@@ -44,11 +44,31 @@ function getConfig(block) {
     publishHost,
     apiKey: cell(2),
     bearerToken: cell(3),
+    aemPath: cell(4),
   };
 }
 
-async function fetchAssets({ authorHost, apiKey, bearerToken }) {
+async function fetchAssets({ authorHost, apiKey, bearerToken, aemPath, searchText }) {
   const endpoint = `https://${authorHost}/adobe/assets/search`;
+
+  const query = [...SEARCH_BODY.query];
+
+  if (aemPath) {
+    const ancestorUrn = `urn:aaid:aem:${aemPath.replace(/\//g, '*')}`;
+    query.push({ term: { 'repositoryMetadata.repo:ancestors': [ancestorUrn] } });
+  }
+
+  if (searchText) {
+    query.push({
+      match: {
+        text: searchText,
+        mode: 'HYBRID',
+      },
+    });
+  }
+
+  const body = { ...SEARCH_BODY, query };
+
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
@@ -56,7 +76,7 @@ async function fetchAssets({ authorHost, apiKey, bearerToken }) {
       'x-api-key': apiKey,
       Authorization: `Bearer ${bearerToken}`,
     },
-    body: JSON.stringify(SEARCH_BODY),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
@@ -148,7 +168,33 @@ function buildDrawer() {
     h2.className = 'asset-drawer-title';
     h2.textContent = title;
 
-    content.append(img, h2);
+    const downloadUrl = `https://${publishHost}/adobe/dynamicmedia/deliver/dm-aid--${uuid}/${name}`;
+    const filename = item.repositoryMetadata['repo:name'] ?? 'asset';
+
+    const downloadBtn = document.createElement('button');
+    downloadBtn.className = 'asset-drawer-download';
+    downloadBtn.textContent = 'Download';
+    downloadBtn.addEventListener('click', async () => {
+      downloadBtn.textContent = 'Downloading…';
+      downloadBtn.disabled = true;
+      try {
+        const res = await fetch(downloadUrl);
+        const blob = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(blobUrl);
+      } catch {
+        downloadBtn.textContent = 'Download failed';
+        return;
+      }
+      downloadBtn.textContent = 'Download';
+      downloadBtn.disabled = false;
+    });
+
+    content.append(img, h2, downloadBtn);
 
     if (description) {
       const p = document.createElement('p');
@@ -285,66 +331,222 @@ export default async function decorate(block) {
   const drawer = buildDrawer();
   document.body.append(drawer);
 
-  // Mutable sort state
+  const PAGE_SIZE = 12;
+
+  // Mutable state
   let sortKey = 'size';
   let sortAsc = false;
+  let currentPage = 0;
+  let allItems = items; // updated after each search
 
   const grid = document.createElement('div');
   grid.className = 'asset-grid-inner';
 
+  const pagination = document.createElement('div');
+  pagination.className = 'asset-grid-pagination';
+
   function renderGrid() {
     const option = SORT_OPTIONS.find((o) => o.key === sortKey);
-    const sorted = [...items].sort((a, b) => {
+    const sorted = [...allItems].sort((a, b) => {
       const av = option.getValue(a);
       const bv = option.getValue(b);
       if (av < bv) return sortAsc ? -1 : 1;
       if (av > bv) return sortAsc ? 1 : -1;
       return 0;
     });
-    grid.replaceChildren(...sorted.map((item) => buildCard(item, config.publishHost, drawer)));
+
+    if (sorted.length === 0) {
+      const msg = document.createElement('p');
+      msg.className = 'asset-grid-empty';
+      msg.textContent = 'No assets found.';
+      grid.replaceChildren(msg);
+      pagination.innerHTML = '';
+      return;
+    }
+
+    const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+    // Clamp page in case sort reduced total
+    if (currentPage >= totalPages) currentPage = Math.max(0, totalPages - 1);
+
+    const pageItems = sorted.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
+    grid.replaceChildren(...pageItems.map((item) => buildCard(item, config.publishHost, drawer)));
+
+    // Pagination controls
+    pagination.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'asset-grid-page-btn';
+    prevBtn.textContent = '←';
+    prevBtn.setAttribute('aria-label', 'Previous page');
+    prevBtn.disabled = currentPage === 0;
+    prevBtn.addEventListener('click', () => { currentPage -= 1; renderGrid(); });
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'asset-grid-page-btn';
+    nextBtn.textContent = '→';
+    nextBtn.setAttribute('aria-label', 'Next page');
+    nextBtn.disabled = currentPage === totalPages - 1;
+    nextBtn.addEventListener('click', () => { currentPage += 1; renderGrid(); });
+
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'asset-grid-page-info';
+    pageInfo.textContent = `${currentPage + 1} / ${totalPages}`;
+
+    pagination.append(prevBtn, pageInfo, nextBtn);
+  }
+
+  // Custom dropdown helper — fully styled, keyboard accessible
+  function buildCustomSelect(options, selectedValue, ariaLabel, onChangeFn) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'asset-grid-custom-select';
+    wrapper.setAttribute('role', 'combobox');
+    wrapper.setAttribute('aria-haspopup', 'listbox');
+    wrapper.setAttribute('aria-expanded', 'false');
+    wrapper.setAttribute('aria-label', ariaLabel);
+    wrapper.setAttribute('tabindex', '0');
+
+    const trigger = document.createElement('div');
+    trigger.className = 'asset-grid-custom-select-trigger';
+
+    const triggerText = document.createElement('span');
+    const currentOption = options.find(([, v]) => v === selectedValue) ?? options[0];
+    triggerText.textContent = currentOption[0];
+    trigger.append(triggerText);
+
+    const chevron = document.createElement('span');
+    chevron.className = 'asset-grid-custom-select-chevron';
+    chevron.setAttribute('aria-hidden', 'true');
+    trigger.append(chevron);
+
+    const listbox = document.createElement('ul');
+    listbox.className = 'asset-grid-custom-select-listbox';
+    listbox.setAttribute('role', 'listbox');
+
+    let currentValue = selectedValue ?? options[0][1];
+
+    options.forEach(([label, value]) => {
+      const item = document.createElement('li');
+      item.className = 'asset-grid-custom-select-option';
+      item.setAttribute('role', 'option');
+      item.setAttribute('data-value', value);
+      item.setAttribute('aria-selected', String(value === currentValue));
+      item.textContent = label;
+      if (value === currentValue) item.classList.add('is-selected');
+
+      item.addEventListener('click', () => {
+        if (value === currentValue) { close(); return; }
+        currentValue = value;
+        triggerText.textContent = label;
+        listbox.querySelectorAll('.asset-grid-custom-select-option').forEach((o) => {
+          const sel = o.dataset.value === currentValue;
+          o.setAttribute('aria-selected', String(sel));
+          o.classList.toggle('is-selected', sel);
+        });
+        close();
+        onChangeFn(currentValue);
+      });
+
+      listbox.append(item);
+    });
+
+    wrapper.append(trigger, listbox);
+
+    const open = () => {
+      wrapper.classList.add('is-open');
+      wrapper.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      wrapper.classList.remove('is-open');
+      wrapper.setAttribute('aria-expanded', 'false');
+    };
+
+    trigger.addEventListener('click', () => (wrapper.classList.contains('is-open') ? close() : open()));
+    wrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); wrapper.classList.contains('is-open') ? close() : open(); }
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const items = [...listbox.querySelectorAll('.asset-grid-custom-select-option')];
+        const idx = items.findIndex((o) => o.dataset.value === currentValue);
+        const next = e.key === 'ArrowDown' ? items[idx + 1] : items[idx - 1];
+        if (next) next.click();
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => { if (!wrapper.contains(e.target)) close(); }, true);
+
+    wrapper.getValue = () => currentValue;
+    return wrapper;
   }
 
   // Sort bar
   const sortBar = document.createElement('div');
   sortBar.className = 'asset-grid-sort-bar';
 
-  const sortLabel = document.createElement('label');
+  const sortLabel = document.createElement('span');
   sortLabel.className = 'asset-grid-sort-label';
   sortLabel.textContent = 'Sort by:';
-  sortLabel.setAttribute('for', 'asset-grid-sort-field');
 
-  const fieldSelect = document.createElement('select');
-  fieldSelect.className = 'asset-grid-sort-select';
-  fieldSelect.id = 'asset-grid-sort-field';
-  SORT_OPTIONS.forEach(({ key, label }) => {
-    const opt = document.createElement('option');
-    opt.value = key;
-    opt.textContent = label;
-    opt.selected = key === sortKey;
-    fieldSelect.append(opt);
-  });
+  const fieldDropdown = buildCustomSelect(
+    SORT_OPTIONS.map(({ key, label }) => [label, key]),
+    sortKey,
+    'Sort field',
+    (value) => { sortKey = value; currentPage = 0; renderGrid(); },
+  );
 
-  const dirSelect = document.createElement('select');
-  dirSelect.className = 'asset-grid-sort-select';
-  dirSelect.setAttribute('aria-label', 'Sort direction');
-  [['Descending', 'false'], ['Ascending', 'true']].forEach(([label, value]) => {
-    const opt = document.createElement('option');
-    opt.value = value;
-    opt.textContent = label;
-    opt.selected = value === String(sortAsc);
-    dirSelect.append(opt);
-  });
+  const dirDropdown = buildCustomSelect(
+    [['Descending', 'false'], ['Ascending', 'true']],
+    String(sortAsc),
+    'Sort direction',
+    (value) => { sortAsc = value === 'true'; currentPage = 0; renderGrid(); },
+  );
 
-  const onChange = () => {
-    sortKey = fieldSelect.value;
-    sortAsc = dirSelect.value === 'true';
+  const sortControls = document.createElement('div');
+  sortControls.className = 'asset-grid-sort-controls';
+  sortControls.append(sortLabel, fieldDropdown, dirDropdown);
+  sortBar.append(sortControls);
+
+  // Search bar
+  const searchBar = document.createElement('div');
+  searchBar.className = 'asset-grid-search-bar';
+
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.className = 'asset-grid-search-input';
+  searchInput.placeholder = 'Search assets…';
+  searchInput.setAttribute('aria-label', 'Search assets');
+
+  const searchBtn = document.createElement('button');
+  searchBtn.className = 'asset-grid-search-btn';
+  searchBtn.setAttribute('aria-label', 'Search');
+  searchBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M29 27.586l-7.552-7.552A11 11 0 1 0 19.433 22l7.553 7.552zM4 13a9 9 0 1 1 9 9 9.01 9.01 0 0 1-9-9z"/></svg>';
+
+  const doSearch = async () => {
+    const searchText = searchInput.value.trim();
+    searchBtn.disabled = true;
+    searchInput.disabled = true;
+    grid.textContent = 'Searching…';
+    pagination.innerHTML = '';
+    try {
+      const data = await fetchAssets({ ...config, searchText });
+      allItems = (data?.hits?.results ?? []).filter((item) => item.repositoryMetadata?.['aem:published']);
+    } catch (err) {
+      grid.textContent = `Error: ${err.message}`;
+      return;
+    } finally {
+      searchBtn.disabled = false;
+      searchInput.disabled = false;
+    }
+    currentPage = 0;
     renderGrid();
   };
 
-  fieldSelect.addEventListener('change', onChange);
-  dirSelect.addEventListener('change', onChange);
+  searchBtn.addEventListener('click', doSearch);
+  searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(); });
 
-  sortBar.append(sortLabel, fieldSelect, dirSelect);
+  searchBar.append(searchInput, searchBtn);
 
   renderGrid();
 
@@ -354,6 +556,16 @@ export default async function decorate(block) {
     h2.textContent = config.title;
     children.push(h2);
   }
-  children.push(sortBar, grid);
+  const toolbar = document.createElement('div');
+  toolbar.className = 'asset-grid-toolbar';
+
+  const pathEl = document.createElement('p');
+  pathEl.className = 'asset-grid-path';
+  if (config.aemPath) {
+    pathEl.innerHTML = `<span class="asset-grid-path-label">DAM Path</span> ${config.aemPath}`;
+  }
+  toolbar.append(pathEl, sortBar);
+
+  children.push(toolbar, searchBar, grid, pagination);
   block.replaceChildren(...children);
 }

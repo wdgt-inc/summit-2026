@@ -44,6 +44,12 @@
           "valueType": "string",
           "name": "bearerToken",
           "label": "Bearer Token"
+        },
+        {
+          "component": "aem-content",
+          "name": "aemPath",
+          "label": "AEM Path",
+          "description": "Optional DAM folder to filter results"
         }
       ]
     }
