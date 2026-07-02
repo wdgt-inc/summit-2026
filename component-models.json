@@ -161,6 +161,25 @@
         "valueType": "string",
         "name": "title",
         "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "authorHost",
+        "label": "Author Hostname",
+        "description": "AEM author hostname, e.g. author-p10681-e1696505.adobeaemcloud.com"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "apiKey",
+        "label": "API Key"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bearerToken",
+        "label": "Bearer Token"
       }
     ]
   },
