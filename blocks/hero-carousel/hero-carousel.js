@@ -110,11 +110,12 @@ export default function decorate(block) {
     dot.className = 'hero-carousel-dot';
     dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
     if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goTo(i)); // eslint-disable-line no-use-before-define
+    dot.addEventListener('click', () => navigate(i)); // eslint-disable-line no-use-before-define
     dots.append(dot);
   });
 
   let current = 0;
+  let timer;
 
   function goTo(index) {
     current = (index + slides.length) % slides.length;
@@ -124,12 +125,23 @@ export default function decorate(block) {
     });
   }
 
-  prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn.addEventListener('click', () => goTo(current + 1));
-
-  if (autoTransition && slides.length > 1) {
-    setInterval(() => goTo(current + 1), transitionInterval * 1000);
+  function startTimer() {
+    if (!autoTransition || slides.length <= 1) return;
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), transitionInterval * 1000);
   }
+
+  // Manual navigation: move, then restart the auto-advance countdown so a slide
+  // the user just chose gets the full interval before advancing.
+  function navigate(index) {
+    goTo(index);
+    startTimer();
+  }
+
+  prevBtn.addEventListener('click', () => navigate(current - 1));
+  nextBtn.addEventListener('click', () => navigate(current + 1));
+
+  startTimer();
 
   block.replaceChildren(prevBtn, clip, nextBtn, dots);
 }
