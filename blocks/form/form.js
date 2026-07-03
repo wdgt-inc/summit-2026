@@ -70,7 +70,7 @@ function createCheckboxField(row) {
   const cells = [...row.children];
   const fieldName = cells[1]?.textContent?.trim() || '';
   const title = cells[2]?.textContent?.trim() || '';
-  const label = cells[3]?.textContent?.trim() || '';
+  const labelHTML = cells[3]?.innerHTML?.trim() || '';
   const required = cells[4]?.textContent?.trim() === 'true';
   const checked = cells[5]?.textContent?.trim() === 'true';
 
@@ -93,10 +93,10 @@ function createCheckboxField(row) {
   input.className = 'form-checkbox';
   if (required) input.required = true;
   if (checked) input.checked = true;
-  input.name = fieldName || (title || label).toLowerCase().replace(/\s+/g, '-');
+  input.name = fieldName || (title || cells[3]?.textContent?.trim() || '').toLowerCase().replace(/\s+/g, '-');
 
   const labelEl = document.createElement('label');
-  labelEl.textContent = label;
+  labelEl.innerHTML = labelHTML;
   // No required asterisk on the label - only on the title
 
   checkboxWrapper.append(input, labelEl);

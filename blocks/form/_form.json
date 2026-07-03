@@ -270,10 +270,10 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "label",
           "label": "Label",
-          "description": "Label displayed next to the checkbox",
+          "description": "Label displayed next to the checkbox (supports links and rich text)",
           "valueType": "string"
         },
         {
