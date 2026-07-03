@@ -136,6 +136,7 @@
   border-radius: 6px;
   overflow: hidden;
   background: var(--background-color, #fff);
+  cursor: pointer;
 }
 
 .asset-grid .asset-card-image {
@@ -163,7 +164,7 @@
   font-weight: 600;
   font-size: 0.9rem;
   margin: 0;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .asset-grid .asset-card-title {
@@ -291,15 +292,15 @@
   gap: 0;
 }
 
-.asset-grid .asset-grid-page-btn:hover:not(:disabled) {
-  background: #e8e8e8;
-}
-
 .asset-grid .asset-grid-page-btn:disabled {
   color: #c6c6c6;
   border-bottom-color: #c6c6c6;
   cursor: not-allowed;
   background: var(--light-color);
+}
+
+.asset-grid .asset-grid-page-btn:hover:not(:disabled) {
+  background: #e8e8e8;
 }
 
 .asset-grid .asset-grid-page-info {
@@ -313,10 +314,6 @@
   color: var(--text-color);
   font-family: var(--body-font-family);
   white-space: nowrap;
-}
-
-.asset-grid .asset-card {
-  cursor: pointer;
 }
 
 .asset-grid .asset-card:focus-visible {
@@ -416,13 +413,13 @@
   overflow: visible !important;
 }
 
-.asset-drawer-download:hover:not(:disabled) {
-  background-color: var(--link-hover-color, #0043ce) !important;
-}
-
 .asset-drawer-download:disabled {
   background-color: var(--dark-color, #525252) !important;
   cursor: not-allowed;
+}
+
+.asset-drawer-download:hover:not(:disabled) {
+  background-color: var(--link-hover-color, #0043ce) !important;
 }
 
 .asset-drawer-description {
@@ -470,5 +467,5 @@
 
 .asset-drawer-meta td {
   color: #57606a;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }

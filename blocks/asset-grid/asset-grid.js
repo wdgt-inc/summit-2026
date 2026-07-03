@@ -48,7 +48,9 @@ function getConfig(block) {
   };
 }
 
-async function fetchAssets({ authorHost, apiKey, bearerToken, aemPath, searchText }) {
+async function fetchAssets({
+  authorHost, apiKey, bearerToken, aemPath, searchText,
+}) {
   const endpoint = `https://${authorHost}/adobe/assets/search`;
 
   const query = [...SEARCH_BODY.query];
@@ -122,11 +124,12 @@ function buildDrawer() {
   drawer.append(closeBtn, content);
   overlay.append(drawer);
 
+  let onKey;
   const close = () => {
     overlay.classList.remove('is-open');
     document.removeEventListener('keydown', onKey);
   };
-  const onKey = (e) => { if (e.key === 'Escape') close(); };
+  onKey = (e) => { if (e.key === 'Escape') close(); };
 
   closeBtn.addEventListener('click', close);
   overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
@@ -411,7 +414,7 @@ export default async function decorate(block) {
 
     const triggerText = document.createElement('span');
     const currentOption = options.find(([, v]) => v === selectedValue) ?? options[0];
-    triggerText.textContent = currentOption[0];
+    [triggerText.textContent] = currentOption;
     trigger.append(triggerText);
 
     const chevron = document.createElement('span');
@@ -424,6 +427,15 @@ export default async function decorate(block) {
     listbox.setAttribute('role', 'listbox');
 
     let currentValue = selectedValue ?? options[0][1];
+
+    const open = () => {
+      wrapper.classList.add('is-open');
+      wrapper.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      wrapper.classList.remove('is-open');
+      wrapper.setAttribute('aria-expanded', 'false');
+    };
 
     options.forEach(([label, value]) => {
       const item = document.createElement('li');
@@ -452,24 +464,18 @@ export default async function decorate(block) {
 
     wrapper.append(trigger, listbox);
 
-    const open = () => {
-      wrapper.classList.add('is-open');
-      wrapper.setAttribute('aria-expanded', 'true');
-    };
-    const close = () => {
-      wrapper.classList.remove('is-open');
-      wrapper.setAttribute('aria-expanded', 'false');
-    };
-
     trigger.addEventListener('click', () => (wrapper.classList.contains('is-open') ? close() : open()));
     wrapper.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); wrapper.classList.contains('is-open') ? close() : open(); }
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (wrapper.classList.contains('is-open')) close(); else open();
+      }
       if (e.key === 'Escape') close();
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
-        const items = [...listbox.querySelectorAll('.asset-grid-custom-select-option')];
-        const idx = items.findIndex((o) => o.dataset.value === currentValue);
-        const next = e.key === 'ArrowDown' ? items[idx + 1] : items[idx - 1];
+        const optionEls = [...listbox.querySelectorAll('.asset-grid-custom-select-option')];
+        const idx = optionEls.findIndex((o) => o.dataset.value === currentValue);
+        const next = e.key === 'ArrowDown' ? optionEls[idx + 1] : optionEls[idx - 1];
         if (next) next.click();
       }
     });
@@ -530,8 +536,8 @@ export default async function decorate(block) {
     grid.textContent = 'Searching…';
     pagination.innerHTML = '';
     try {
-      const data = await fetchAssets({ ...config, searchText });
-      allItems = (data?.hits?.results ?? []).filter((item) => item.repositoryMetadata?.['aem:published']);
+      const searchData = await fetchAssets({ ...config, searchText });
+      allItems = (searchData?.hits?.results ?? []).filter((item) => item.repositoryMetadata?.['aem:published']);
     } catch (err) {
       grid.textContent = `Error: ${err.message}`;
       return;

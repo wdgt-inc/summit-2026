@@ -240,6 +240,17 @@ function showThankYouOverlay(message, form) {
   }, 5000);
 }
 
+function showFormError(form) {
+  let errorEl = form.querySelector('.form-error-message');
+  if (!errorEl) {
+    errorEl = document.createElement('p');
+    errorEl.className = 'form-error-message';
+    errorEl.setAttribute('role', 'alert');
+    form.appendChild(errorEl);
+  }
+  errorEl.textContent = 'There was an error submitting the form. Please try again.';
+}
+
 export default function decorate(block) {
   // Extract thank you message from block
   let thankYouMessage = '';
@@ -386,12 +397,12 @@ export default function decorate(block) {
       } else {
         // eslint-disable-next-line no-console
         console.error('Form submission failed:', response.status, response.statusText);
-        alert('There was an error submitting the form. Please try again.');
+        showFormError(form);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Form submission error:', error);
-      alert('There was an error submitting the form. Please try again.');
+      showFormError(form);
     }
   });
 
