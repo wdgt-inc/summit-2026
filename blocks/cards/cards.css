@@ -12,10 +12,19 @@
   flex: 0 1 257px;
   border: 1px solid var(--border-color);
   background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .cards .cards-card-body {
   margin: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cards .cards-card-body .button-container:last-child {
+  margin-top: auto;
 }
 
 .cards .cards-card-image {
