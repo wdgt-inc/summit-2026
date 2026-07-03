@@ -76,7 +76,7 @@
 
 .form .form-field-checkbox .checkbox-wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
 }
 
@@ -91,6 +91,12 @@
   margin-bottom: 0;
   cursor: pointer;
   font-size: var(--body-font-size-xs);
+  text-align: left;
+}
+
+.form .form-field-checkbox .checkbox-wrapper label p {
+  margin: 0;
+  text-align: left;
 }
 
 .form .form-field-checkbox-group {
