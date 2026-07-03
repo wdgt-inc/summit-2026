@@ -47,9 +47,10 @@ export default function decorate(block) {
       const link = linkCell.querySelector('a');
       if (link) {
         link.classList.add('button');
-        if (targetCell && targetCell.textContent.trim() === 'true') {
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
+        const linkTarget = targetCell && targetCell.textContent.trim();
+        if (linkTarget) {
+          link.target = linkTarget;
+          if (linkTarget === '_blank') link.rel = 'noopener noreferrer';
         }
         const btnContainer = document.createElement('p');
         btnContainer.className = 'button-container';

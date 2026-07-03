@@ -248,10 +248,20 @@
         "label": "Button Title"
       },
       {
-        "component": "checkbox",
+        "component": "select",
         "name": "linkTarget",
-        "label": "Open in new tab",
-        "valueType": "boolean"
+        "label": "Button Target",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Same tab",
+            "value": "_self"
+          },
+          {
+            "name": "New tab",
+            "value": "_blank"
+          }
+        ]
       }
     ]
   },
