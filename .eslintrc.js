@@ -22,11 +22,14 @@ module.exports = {
     // (a hidden discriminator plus label/name/placeholder/required/etc). Grouping
     // them into fewer delivered cells would only obscure the structure, so allow
     // the higher counts explicitly for these models.
+    // asset-grid is a POC block; its extra config fields (and their auth scheme)
+    // are a known open item to be redesigned, so allow its count for now.
     'xwalk/max-cells': ['error', {
       'form-text-field': 5,
       'form-email-field': 5,
       'form-checkbox-group': 5,
       'form-checkbox-field': 6,
+      'asset-grid': 5,
     }],
   },
 };
