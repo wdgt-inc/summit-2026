@@ -246,6 +246,12 @@
         "component": "text",
         "name": "linkTitle",
         "label": "Button Title"
+      },
+      {
+        "component": "checkbox",
+        "name": "linkTarget",
+        "label": "Open in new tab",
+        "valueType": "boolean"
       }
     ]
   },

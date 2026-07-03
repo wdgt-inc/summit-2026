@@ -12,6 +12,7 @@ export default function decorate(block) {
     const headingCell = cells[1];
     const textCell = cells[2];
     const linkCell = cells[3];
+    const targetCell = cells[4];
 
     if (imageCell && imageCell.querySelector('picture')) {
       imageCell.className = 'cards-card-image';
@@ -46,6 +47,10 @@ export default function decorate(block) {
       const link = linkCell.querySelector('a');
       if (link) {
         link.classList.add('button');
+        if (targetCell && targetCell.textContent.trim() === 'true') {
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+        }
         const btnContainer = document.createElement('p');
         btnContainer.className = 'button-container';
         btnContainer.append(link);
