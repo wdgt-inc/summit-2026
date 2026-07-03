@@ -308,7 +308,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "fieldType",
+        "name": "kind",
         "value": "text",
         "label": "Field Type",
         "valueType": "string",
@@ -356,7 +356,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "fieldType",
+        "name": "kind",
         "value": "email",
         "label": "Field Type",
         "valueType": "string",
@@ -404,7 +404,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "fieldType",
+        "name": "kind",
         "value": "checkbox",
         "label": "Field Type",
         "valueType": "string",
@@ -470,7 +470,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "fieldType",
+        "name": "kind",
         "value": "checkbox-group",
         "label": "Field Type",
         "valueType": "string",
@@ -518,7 +518,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "fieldType",
+        "name": "kind",
         "label": "Field Type",
         "valueType": "string",
         "value": "hidden"
@@ -543,7 +543,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "fieldType",
+        "name": "kind",
         "value": "submit",
         "label": "Field Type",
         "valueType": "string",

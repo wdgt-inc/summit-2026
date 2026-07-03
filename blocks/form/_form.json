@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "form-text-field",
-              "fieldType": "text",
+              "kind": "text",
               "fieldName": "text-field",
               "label": "Text Field",
               "placeholder": "Enter text",
@@ -44,7 +44,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "form-email-field",
-              "fieldType": "email",
+              "kind": "email",
               "fieldName": "email",
               "label": "Email",
               "placeholder": "Enter email",
@@ -63,7 +63,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "form-checkbox-field",
-              "fieldType": "checkbox",
+              "kind": "checkbox",
               "fieldName": "agree-terms",
               "title": "Terms and Conditions",
               "label": "I agree to the terms and conditions",
@@ -83,7 +83,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "form-checkbox-group",
-              "fieldType": "checkbox-group",
+              "kind": "checkbox-group",
               "fieldName": "interests",
               "label": "Select Your Interests",
               "options": "Technology, Design, Marketing",
@@ -102,7 +102,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "form-hidden-field",
-              "fieldType": "hidden",
+              "kind": "hidden",
               "fieldName": "hiddedItem",
               "value": "Value to Submit"
             }
@@ -119,7 +119,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "form-submit-button",
-              "fieldType": "submit",
+              "kind": "submit",
               "text": "Submit",
               "type": "primary"
             }
@@ -153,7 +153,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "fieldType",
+          "name": "kind",
           "value": "text",
           "label": "Field Type",
           "valueType": "string",
@@ -201,7 +201,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "fieldType",
+          "name": "kind",
           "value": "email",
           "label": "Field Type",
           "valueType": "string",
@@ -249,7 +249,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "fieldType",
+          "name": "kind",
           "value": "checkbox",
           "label": "Field Type",
           "valueType": "string",
@@ -315,7 +315,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "fieldType",
+          "name": "kind",
           "value": "checkbox-group",
           "label": "Field Type",
           "valueType": "string",
@@ -363,7 +363,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "fieldType",
+          "name": "kind",
           "label": "Field Type",
           "valueType": "string",
           "value": "hidden"
@@ -388,7 +388,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "fieldType",
+          "name": "kind",
           "value": "submit",
           "label": "Field Type",
           "valueType": "string",

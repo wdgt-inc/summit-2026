@@ -408,24 +408,24 @@ export default function decorate(block) {
 
   // Process each row (child) in the block
   [...block.children].forEach((row) => {
-    // Get the field type from the first cell or data-block-name attribute
+    // Get the field kind from the first cell or data-block-name attribute
     const cells = [...row.children];
-    const fieldType = cells[0]?.textContent?.trim().toLowerCase();
+    const kind = cells[0]?.textContent?.trim().toLowerCase();
     const blockName = row.getAttribute('data-block-name');
 
     let fieldElement;
-    // Check both fieldType (from HTML) and blockName (from data attribute)
-    if (fieldType === 'text' || blockName === 'form-text-field') {
+    // Check both kind (from HTML) and blockName (from data attribute)
+    if (kind === 'text' || blockName === 'form-text-field') {
       fieldElement = createTextField(row);
-    } else if (fieldType === 'email' || blockName === 'form-email-field') {
+    } else if (kind === 'email' || blockName === 'form-email-field') {
       fieldElement = createEmailField(row);
-    } else if (fieldType === 'checkbox' || blockName === 'form-checkbox-field') {
+    } else if (kind === 'checkbox' || blockName === 'form-checkbox-field') {
       fieldElement = createCheckboxField(row);
-    } else if (fieldType === 'checkbox-group' || blockName === 'form-checkbox-group') {
+    } else if (kind === 'checkbox-group' || blockName === 'form-checkbox-group') {
       fieldElement = createCheckboxGroup(row);
-    } else if (fieldType === 'hidden' || blockName === 'form-hidden-field') {
+    } else if (kind === 'hidden' || blockName === 'form-hidden-field') {
       fieldElement = createHiddenField(row);
-    } else if (fieldType === 'submit' || blockName === 'form-submit-button') {
+    } else if (kind === 'submit' || blockName === 'form-submit-button') {
       fieldElement = createSubmitButton(row);
     }
 
