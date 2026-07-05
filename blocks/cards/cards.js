@@ -2,7 +2,8 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 function decoratePackageCard(body) {
-  const paragraphs = [...body.querySelectorAll('p')];
+  // Skip the heading <p> (contains <strong>) — only process the text paragraphs
+  const paragraphs = [...body.querySelectorAll('p')].filter((p) => !p.querySelector('strong'));
   const dl = document.createElement('dl');
   dl.className = 'cards-package-rows';
   const outputSection = document.createElement('div');
