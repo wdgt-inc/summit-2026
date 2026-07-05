@@ -24,7 +24,13 @@ function decoratePackageCard(body) {
     }
   });
 
-  body.prepend(dl);
+  // Insert dl after the heading (first child) if present, otherwise prepend
+  const firstChild = body.firstChild;
+  if (firstChild) {
+    firstChild.after(dl);
+  } else {
+    body.append(dl);
+  }
   if (outputSection.childElementCount) body.append(outputSection);
 }
 
