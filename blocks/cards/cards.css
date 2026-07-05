@@ -211,7 +211,7 @@
 }
 
 .cards.package > ul > li {
-  flex: 0 1 280px;
+  flex: 1 1 280px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background-color: var(--light-color);
