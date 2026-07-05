@@ -203,3 +203,94 @@
 .cards.benefits.block .cards-card-body .button-container {
   display: none;
 }
+
+/* Cards Package Variant */
+.cards.package > ul {
+  gap: 24px;
+  justify-content: flex-start;
+}
+
+.cards.package > ul > li {
+  flex: 0 1 280px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--light-color);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: none;
+}
+
+.cards.package .cards-card-image {
+  display: none;
+}
+
+.cards.package .cards-card-body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+/* Package name heading */
+.cards.package .cards-card-body > p:first-child strong {
+  font-size: var(--heading-font-size-l);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+/* Line-item rows */
+.cards.package .cards-package-rows {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin: 24px 0 0;
+  padding: 0;
+}
+
+.cards.package .cards-package-rows dt,
+.cards.package .cards-package-rows dd {
+  margin: 0;
+  padding: 10px 0;
+  border-top: 1px solid var(--border-color);
+  font-size: var(--body-font-size-s);
+  line-height: 1.4;
+  color: var(--dark-color);
+}
+
+.cards.package .cards-package-rows dd {
+  text-align: right;
+  font-weight: 400;
+}
+
+/* Last row (Total) — accent colour on the value */
+.cards.package .cards-package-rows dd:last-child {
+  color: var(--link-color);
+  font-weight: 600;
+}
+
+/* Output section */
+.cards.package .cards-package-output {
+  margin-top: 28px;
+  padding: 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cards.package .cards-package-output > p:first-child {
+  font-size: var(--body-font-size-xs);
+  color: var(--dark-color);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cards.package .cards-package-output > p:not(:first-child) {
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+  color: var(--text-color);
+  margin: 0;
+}

@@ -1,7 +1,35 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+function decoratePackageCard(body) {
+  const paragraphs = [...body.querySelectorAll('p')];
+  const dl = document.createElement('dl');
+  dl.className = 'cards-package-rows';
+  const outputSection = document.createElement('div');
+  outputSection.className = 'cards-package-output';
+
+  let inOutput = false;
+  paragraphs.forEach((p) => {
+    if (!inOutput && p.textContent.includes('|')) {
+      const [label, value] = p.textContent.split('|').map((s) => s.trim());
+      const dt = document.createElement('dt');
+      dt.textContent = label;
+      const dd = document.createElement('dd');
+      dd.textContent = value;
+      dl.append(dt, dd);
+      p.remove();
+    } else {
+      inOutput = true;
+      outputSection.append(p);
+    }
+  });
+
+  body.prepend(dl);
+  if (outputSection.childElementCount) body.append(outputSection);
+}
+
 export default function decorate(block) {
+  const isPackage = block.classList.contains('package');
   const ul = document.createElement('ul');
   [...block.children].forEach((row) => {
     const li = document.createElement('li');
@@ -42,6 +70,8 @@ export default function decorate(block) {
         while (wrapper.firstChild) body.append(wrapper.firstChild);
       }
     }
+
+    if (isPackage) decoratePackageCard(body);
 
     if (linkCell) {
       const link = linkCell.querySelector('a');
