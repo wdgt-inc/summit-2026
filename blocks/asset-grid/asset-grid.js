@@ -21,7 +21,7 @@ const SEARCH_BODY = {
       },
     },
   ],
-  limit: 40,
+  limit: 200,
   sort: [
     {
       field: 'repositoryMetadata.repo:size',
