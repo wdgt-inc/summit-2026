@@ -284,6 +284,28 @@ header nav .nav-sections ul > li > ul > li {
   }
 }
 
+/* Neutralize auto-button styling on lone nav links so they render as plain
+   nav text, consistent with the other top-level items. */
+header nav .nav-sections .button-container {
+  margin: 0;
+}
+
+header nav .nav-sections a.button:any-link {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+}
+
+header nav .nav-sections a.button:any-link:hover {
+  background: none;
+  color: inherit;
+}
+
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
