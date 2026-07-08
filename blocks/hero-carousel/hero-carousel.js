@@ -141,7 +141,22 @@ export default function decorate(block) {
   prevBtn.addEventListener('click', () => navigate(current - 1));
   nextBtn.addEventListener('click', () => navigate(current + 1));
 
+  // Touch swipe
+  let touchStartX = 0;
+  clip.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  clip.addEventListener('touchend', (e) => {
+    const delta = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 40) navigate(delta > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
   startTimer();
+
+  // Hide prev/next on touch devices — swipe gestures are available instead
+  if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+    block.classList.add('is-touch');
+  }
 
   block.replaceChildren(prevBtn, clip, nextBtn, dots);
 }
