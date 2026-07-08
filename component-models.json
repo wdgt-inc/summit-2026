@@ -543,6 +543,61 @@
     ]
   },
   {
+    "id": "form-multiline-text-field",
+    "fields": [
+      {
+        "component": "text",
+        "name": "kind",
+        "value": "textarea",
+        "label": "Field Type",
+        "valueType": "string",
+        "hidden": true
+      },
+      {
+        "component": "text",
+        "name": "fieldName",
+        "label": "Field Name",
+        "description": "Unique identifier for this field (used in form submission)",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "placeholder",
+        "label": "Placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "rows",
+        "label": "Rows",
+        "description": "Number of visible text lines",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "required",
+        "label": "Required",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "No",
+            "value": "false"
+          },
+          {
+            "name": "Yes",
+            "value": "true"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "form-submit-button",
     "fields": [
       {

@@ -259,6 +259,26 @@
           }
         },
         {
+          "title": "Form Multiline Text Field",
+          "id": "form-multiline-text-field",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "form-multiline-text-field",
+                  "kind": "textarea",
+                  "fieldName": "message",
+                  "label": "Message",
+                  "placeholder": "Enter your message",
+                  "rows": "4",
+                  "required": false
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Form Submit Button",
           "id": "form-submit-button",
           "plugins": {

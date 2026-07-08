@@ -51,6 +51,11 @@
   border-bottom: 2px solid var(--blue-primary);
 }
 
+.form .form-field .form-textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
 .form .button-container {
   margin-top: 24px;
 }

@@ -154,6 +154,38 @@ function createCheckboxGroup(row) {
   return wrapper;
 }
 
+function createMultilineTextField(row) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'form-field';
+  moveInstrumentation(row, wrapper);
+
+  const cells = [...row.children];
+  const fieldName = cells[1]?.textContent?.trim() || '';
+  const label = cells[2]?.textContent?.trim() || '';
+  const placeholder = cells[3]?.textContent?.trim() || '';
+  const rows = cells[4]?.textContent?.trim() || '4';
+  const required = cells[5]?.textContent?.trim() === 'true';
+
+  if (label) {
+    const labelEl = document.createElement('label');
+    labelEl.textContent = label;
+    if (required) {
+      labelEl.innerHTML += ' <span class="required">*</span>';
+    }
+    wrapper.appendChild(labelEl);
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.className = 'form-input form-textarea';
+  if (placeholder) textarea.placeholder = placeholder;
+  if (required) textarea.required = true;
+  textarea.rows = parseInt(rows, 10) || 4;
+  textarea.name = fieldName || label.toLowerCase().replace(/\s+/g, '-');
+
+  wrapper.appendChild(textarea);
+  return wrapper;
+}
+
 function createHiddenField(row) {
   const wrapper = document.createElement('div');
   wrapper.className = 'form-field form-field-hidden';
@@ -423,6 +455,8 @@ export default function decorate(block) {
       fieldElement = createCheckboxField(row);
     } else if (kind === 'checkbox-group' || blockName === 'form-checkbox-group') {
       fieldElement = createCheckboxGroup(row);
+    } else if (kind === 'textarea' || blockName === 'form-multiline-text-field') {
+      fieldElement = createMultilineTextField(row);
     } else if (kind === 'hidden' || blockName === 'form-hidden-field') {
       fieldElement = createHiddenField(row);
     } else if (kind === 'submit' || blockName === 'form-submit-button') {

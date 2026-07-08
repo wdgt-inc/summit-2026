@@ -51,6 +51,7 @@
       "form-checkbox-field",
       "form-checkbox-group",
       "form-hidden-field",
+      "form-multiline-text-field",
       "form-submit-button"
     ]
   },
